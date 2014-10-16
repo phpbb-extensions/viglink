@@ -1,0 +1,34 @@
+{
+	"name": "phpbb/viglink",
+	"type": "phpbb-extension",
+	"description": "VigLink can convert your existing links into links that earn revenue.",
+	"homepage": "https://www.phpbb.com",
+	"version": "1.0.0",
+	"keywords": ["phpbb", "extension", "viglink"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "phpBB Limited",
+			"email": "operations@phpbb.com",
+			"homepage": "https://www.phpbb.com/go/authors"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"composer/installers": "~1.0"
+	},
+	"require-dev": {
+		"phpbb/epv": "dev-master"
+	},
+	"extra": {
+		"display-name": "VigLink",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.0-RC4,<3.2.*@dev"
+		},
+		"version-check": {
+			"host": "version.phpbb.com",
+			"directory": "/phpbb-extensions",
+			"filename": "viglink_versions.json"
+		}
+	}
+}
