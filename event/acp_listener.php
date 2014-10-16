@@ -1,0 +1,71 @@
+<?php
+/**
+*
+* This file is part of the phpBB Forum Software package.
+*
+* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+* For full copyright and license information, please see
+* the docs/CREDITS.txt file.
+*
+*/
+
+namespace phpbb\viglink\event;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+/**
+* Event listener
+*/
+class acp_listener implements EventSubscriberInterface
+{
+	/** @var \phpbb\viglink\acp\viglink_helper */
+	protected $helper;
+
+	/**
+	 * Constructor
+	 *
+	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
+	 * @return \phpbb\viglink\event\acp_listener
+	 * @access public
+	 */
+	public function __construct(\phpbb\viglink\acp\viglink_helper $viglink_helper)
+	{
+		$this->helper = $viglink_helper;
+	}
+
+	/**
+	* Assign functions defined in this class to event listeners in the core
+	*
+	* @return array
+	* @static
+	* @access public
+	*/
+	static public function getSubscribedEvents()
+	{
+		return array(
+			'core.acp_main_notice'		=> 'set_viglink_services',
+		);
+	}
+
+	/**
+	* Check if phpBB is allowing VigLink services to run.
+	* VigLink will be disabled if phpBB is disallowing it to run.
+	*
+	* @param object $event The event object
+	* @return null
+	* @access public
+	*/
+	public function set_viglink_services($event)
+	{
+		try
+		{
+			$this->helper->set_viglink_services();
+		}
+		catch (\RuntimeException $e)
+		{
+			// fail silently
+		}
+	}
+}
