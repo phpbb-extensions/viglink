@@ -42,11 +42,13 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_VIGLINK_SETTINGS'			=> 'VigLink settings',
-	'ACP_VIGLINK_SETTINGS_EXPLAIN'	=> 'VigLink is a service that can convert links from forum posts into links that earn revenue. Use of this feature requires a <a href="http://www.viglink.com/products/convert/">VigLink Convert</a> account and API key.',
-	'ACP_VIGLINK_ENABLE'			=> 'Enable VigLink Convert',
+	'ACP_VIGLINK_SETTINGS_EXPLAIN'	=> 'VigLink is a non-invasive third-party service that will monetize existing links posted by users of your forum. When visitors click on those existing links and perform certain actions, such as shopping, the merchants pay VigLink a commission, of which a share is donated to the phpBB project. By enabling VigLink and donating proceeds to the phpBB project, you are supporting our open source organization and ensuring our continued financial security.',
+	'ACP_VIGLINK_ENABLE'			=> 'Enable VigLink',
 	'ACP_VIGLINK_ENABLE_EXPLAIN'	=> 'Enables use of VigLink services.',
-	'ACP_VIGLINK_API_KEY'			=> 'VigLink Convert API key',
-	'ACP_VIGLINK_API_KEY_EXPLAIN'	=> 'Enter a valid VigLink Convert API key. To obtain a key, sign up for “VigLink Convert” at <a href="http://www.viglink.com/products/convert/">VigLink.com</a>. Leave this field blank to support phpBB when VigLink is enabled.',
+	'ACP_VIGLINK_EARNINGS'			=> 'Claim your own earnings (optional)',
+	'ACP_VIGLINK_EARNINGS_EXPLAIN'	=> 'You can earn a commission on VigLink monetized links of your own, using your personal VigLink API key. To obtain a key, sign up for a “VigLink Convert” account at <a href="http://www.viglink.com/products/convert/">VigLink.com</a>.',
+	'ACP_VIGLINK_API_KEY'			=> 'VigLink API key',
+	'ACP_VIGLINK_API_KEY_EXPLAIN'	=> 'Enter a valid VigLink Convert API key.',
 	'ACP_VIGLINK_API_KEY_INVALID'	=> '“%s” is not a valid VigLink Convert API key.',
 	'ACP_VIGLINK_DISABLED_GLOBAL'	=> 'VigLink services have been disabled by phpBB.',
 	'ACP_VIGLINK_DISABLED_PHPBB'	=> 'VigLink services have been disabled by phpBB. You may still use VigLink to earn revenue using your own API key.',
