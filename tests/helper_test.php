@@ -1,13 +1,10 @@
 <?php
 /**
  *
- * This file is part of the phpBB Forum Software package.
+ * VigLink extension for the phpBB Forum Software package.
  *
- * @copyright (c) phpBB Limited <https://www.phpbb.com>
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
  * @license GNU General Public License, version 2 (GPL-2.0)
- *
- * For full copyright and license information, please see
- * the docs/CREDITS.txt file.
  *
  */
 
@@ -30,6 +27,9 @@ class helper_test extends \phpbb_test_case
 			->getMock();
 	}
 
+	/**
+	 * Test data for test_set_viglink_services
+	 */
 	public function set_viglink_services_data()
 	{
 		return array(
@@ -159,7 +159,10 @@ class helper_test extends \phpbb_test_case
 	}
 
 	/**
+	 * Test the set_viglink_services method
+	 *
 	 * @dataProvider set_viglink_services_data
+	 * @access public
 	 */
 	public function test_set_viglink_services($current_version, $versions, $expected)
 	{

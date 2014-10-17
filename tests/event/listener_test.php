@@ -1,13 +1,10 @@
 <?php
 /**
 *
-* This file is part of the phpBB Forum Software package.
+* VigLink extension for the phpBB Forum Software package.
 *
-* @copyright (c) phpBB Limited <https://www.phpbb.com>
+* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
 * @license GNU General Public License, version 2 (GPL-2.0)
-*
-* For full copyright and license information, please see
-* the docs/CREDITS.txt file.
 *
 */
 
@@ -15,8 +12,14 @@ namespace phpbb\viglink\tests\event;
 
 class listener_test extends \phpbb_test_case
 {
+	/** @var \phpbb\config\config */
+	protected $config;
+
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
+
+	/** @var \phpbb\viglink\tests\mock\template */
+	protected $template;
 
 	/**
 	* Setup test environment
