@@ -26,15 +26,23 @@ class viglink_data extends \phpbb\db\migration\migration
 	/**
 	* Add VigLink API Key config to the database.
 	*
+	* @todo Add phpBB API key value
 	* @return array Array of table data
 	* @access public
 	*/
 	public function update_data()
 	{
 		return array(
+			// Basic config options
 			array('config.add', array('viglink_enabled', 1)),
 			array('config.add', array('viglink_api_key', '')),
 
+			// Special config options for phpBB use
+			array('config.add', array('allow_viglink_phpbb', 1)),
+			array('config.add', array('allow_viglink_global', 1)),
+			array('config.add', array('phpbb_viglink_api_key', '')),
+
+			// Add the ACP module to Board Configuration
 			array('module.add', array(
 				'acp',
 				'ACP_BOARD_CONFIGURATION',

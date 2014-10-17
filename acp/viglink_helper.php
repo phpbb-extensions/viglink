@@ -53,7 +53,7 @@ class viglink_helper extends \phpbb\version_helper
 
 		foreach ($viglink_switches as $switch)
 		{
-			if (isset($data[$switch]) && ($data[$switch] != $this->config[$switch]))
+			if (isset($data[$switch]) && ($data[$switch] != $this->config[$switch] || !isset($this->config[$switch])))
 			{
 				$this->config->set($switch, (int) $data[$switch]);
 			}
