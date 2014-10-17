@@ -35,7 +35,7 @@ class viglink_helper extends \phpbb\version_helper
 			return $self->compare($data['current'], $current_version, '>=');
 		});
 
-		array_map(array($this, 'set_viglink_configs'), $versions);
+		array_map(array($this, 'set_viglink_switches'), $versions);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class viglink_helper extends \phpbb\version_helper
 	 * @param array $data Array of version file data.
 	 * @return null
 	 */
-	protected function set_viglink_configs($data)
+	protected function set_viglink_switches($data)
 	{
 		$viglink_switches = array(
 			'allow_viglink_phpbb',
