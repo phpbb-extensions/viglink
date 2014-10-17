@@ -16,6 +16,14 @@ class acp_listener_test extends \phpbb_test_case
 {
 	/** @var \phpbb\viglink\event\acp_listener */
 	protected $acp_listener;
+
+	/** @var \phpbb\cache\service */
+	protected $cache;
+
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
 	public function setUp()
@@ -77,6 +85,9 @@ class acp_listener_test extends \phpbb_test_case
 		), array_keys(\phpbb\viglink\event\acp_listener::getSubscribedEvents()));
 	}
 
+	/**
+	* Test data for test_set_viglink_services
+	*/
 	public function set_viglink_services_data()
 	{
 		return array(

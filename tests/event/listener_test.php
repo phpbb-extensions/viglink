@@ -12,8 +12,14 @@ namespace phpbb\viglink\tests\event;
 
 class listener_test extends \phpbb_test_case
 {
+	/** @var \phpbb\config\config */
+	protected $config;
+
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
+
+	/** @var \phpbb\viglink\tests\mock\template */
+	protected $template;
 
 	/**
 	* Setup test environment

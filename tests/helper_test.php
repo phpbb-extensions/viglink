@@ -27,6 +27,9 @@ class helper_test extends \phpbb_test_case
 			->getMock();
 	}
 
+	/**
+	 * Test data for test_set_viglink_services
+	 */
 	public function set_viglink_services_data()
 	{
 		return array(
@@ -156,7 +159,10 @@ class helper_test extends \phpbb_test_case
 	}
 
 	/**
+	 * Test the set_viglink_services method
+	 *
 	 * @dataProvider set_viglink_services_data
+	 * @access public
 	 */
 	public function test_set_viglink_services($current_version, $versions, $expected)
 	{
