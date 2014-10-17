@@ -29,30 +29,6 @@ class viglink_test extends \phpbb_functional_test_case
 	}
 
 	/**
-	* Set some configs that allow VigLink to be used
-	*
-	* @access public
-	*/
-	public function allow_viglink()
-	{
-		$this->get_db();
-
-		$insert_rows = array(
-			array(
-				'config_name'	=> 'allow_viglink_global',
-				'config_value'	=> 1,
-			),
-			array(
-				'config_name'	=> 'allow_viglink_phpbb',
-				'config_value'	=> 1,
-			),
-		);
-		$this->db->sql_multi_insert('phpbb_config', $insert_rows);
-
-		$this->purge_cache();
-	}
-
-	/**
 	* Test VigLink ACP page and save settings
 	*
 	* @access public
@@ -88,8 +64,6 @@ class viglink_test extends \phpbb_functional_test_case
 	*/
 	public function test_viglink_code()
 	{
-		$this->allow_viglink();
-
 		// Assert VigLink appears on viewtopic pages
 		$crawler = self::request('GET', 'viewtopic.php?f=2&t=1');
 		$this->assertContains($this->sample_viglink_key, $crawler->text());
