@@ -29,9 +29,10 @@ class ext extends \phpbb\extension\base
 
 				$cache = $this->container->get('cache');
 				$config = $this->container->get('config');
+				$file_downloader = $this->container->get('file_downloader');
 				$user = $this->container->get('user');
 
-				$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $user);
+				$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
 				try
 				{
 					$viglink_helper->set_viglink_services();

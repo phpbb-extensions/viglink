@@ -180,6 +180,7 @@ class helper_test extends \phpbb_test_case
 			->setConstructorArgs(array(
 				$this->cache,
 				$config,
+				new \phpbb\file_downloader(),
 				new \phpbb\user('\phpbb\datetime'),
 			))
 			->getMock()
