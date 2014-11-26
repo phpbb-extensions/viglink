@@ -4,6 +4,10 @@ This is the repository for the development of the VigLink extension for phpBB.
 
 [![Build Status](https://travis-ci.org/phpbb-extensions/viglink.png)](https://travis-ci.org/phpbb-extensions/viglink)
 
+To-do:
+- [ ] Add phpBB's API key
+- [ ] Update the language used in the ACP module
+
 Note: This extension is currently under development and is not ready to install on any forum.
 
 ## License
