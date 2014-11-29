@@ -44,6 +44,7 @@ class acp_listener_test extends \phpbb_test_case
 			->setConstructorArgs(array(
 				$this->cache,
 				$this->config,
+				new \phpbb\file_downloader(),
 				new \phpbb\user('\phpbb\datetime'),
 			))
 			->getMock()
@@ -162,6 +163,7 @@ class acp_listener_test extends \phpbb_test_case
 			->setConstructorArgs(array(
 				$this->cache,
 				$this->config,
+				new \phpbb\file_downloader(),
 				new \phpbb\user('\phpbb\datetime'),
 			))
 			->getMock()
