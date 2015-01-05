@@ -50,11 +50,10 @@ class acp_listener implements EventSubscriberInterface
 	* Check if phpBB is allowing VigLink services to run.
 	* VigLink will be disabled if phpBB is disallowing it to run.
 	*
-	* @param object $event The event object
 	* @return null
 	* @access public
 	*/
-	public function set_viglink_services($event)
+	public function set_viglink_services()
 	{
 		try
 		{
