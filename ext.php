@@ -27,9 +27,13 @@ class ext extends \phpbb\extension\base
 		{
 			case '': // Empty means nothing has run yet
 
+				/* @var $cache \phpbb\cache\service */
 				$cache = $this->container->get('cache');
+				/* @var $config \phpbb\config\config */
 				$config = $this->container->get('config');
+				/* @var $file_downloader \phpbb\file_downloader */
 				$file_downloader = $this->container->get('file_downloader');
+				/* @var $user \phpbb\user */
 				$user = $this->container->get('user');
 
 				$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
