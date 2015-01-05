@@ -54,11 +54,10 @@ class listener implements EventSubscriberInterface
 	/**
 	* Display VigLink js code
 	*
-	* @param object $event The event object
 	* @return null
 	* @access public
 	*/
-	public function display_viglink($event)
+	public function display_viglink()
 	{
 		if ($this->config['allow_viglink_global'] && $this->config['viglink_api_key'])
 		{
