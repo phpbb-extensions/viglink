@@ -24,7 +24,6 @@ class acp_listener implements EventSubscriberInterface
 	 * Constructor
 	 *
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
-	 * @return \phpbb\viglink\event\acp_listener
 	 * @access public
 	 */
 	public function __construct(\phpbb\viglink\acp\viglink_helper $viglink_helper)
