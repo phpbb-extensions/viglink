@@ -23,8 +23,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Setup test environment
-	*
-	* @access public
 	*/
 	public function setUp()
 	{
@@ -41,8 +39,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Create the event listener
-	*
-	* @access protected
 	*/
 	protected function set_listener()
 	{
@@ -54,8 +50,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is constructed correctly
-	*
-	* @access public
 	*/
 	public function test_construct()
 	{
@@ -65,8 +59,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is subscribing events
-	*
-	* @access public
 	*/
 	public function test_getSubscribedEvents()
 	{
@@ -77,8 +69,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the load_viglink event
-	*
-	* @access public
 	*/
 	public function test_load_viglink()
 	{
