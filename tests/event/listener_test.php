@@ -18,7 +18,7 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
 
-	/** @var \phpbb\viglink\tests\mock\template */
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
 	/**
@@ -34,7 +34,8 @@ class listener_test extends \phpbb_test_case
 			'allow_viglink_phpbb' => 1,
 			'viglink_api_key' => '12345678901234567890123456789012',
 		));
-		$this->template = new \phpbb\viglink\tests\mock\template();
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->getMock();
 	}
 
 	/**
@@ -74,13 +75,15 @@ class listener_test extends \phpbb_test_case
 	{
 		$this->set_listener();
 
+		$this->template->expects($this->once())
+			->method('assign_vars')
+			->with(array(
+				'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'],
+				'VIGLINK_API_KEY'	=> $this->config['viglink_api_key'],
+			));
+
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 		$dispatcher->addListener('core.viewtopic_post_row_after', array($this->listener, 'display_viglink'));
 		$dispatcher->dispatch('core.viewtopic_post_row_after');
-
-		$this->assertEquals(array(
-			'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'],
-			'VIGLINK_API_KEY'	=> $this->config['viglink_api_key'],
-		), $this->template->get_template_vars());
 	}
 }
