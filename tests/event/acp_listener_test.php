@@ -53,8 +53,6 @@ class acp_listener_test extends \phpbb_test_case
 
 	/**
 	* Create the event listener
-	*
-	* @access protected
 	*/
 	protected function set_listener()
 	{
@@ -65,8 +63,6 @@ class acp_listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is constructed correctly
-	*
-	* @access public
 	*/
 	public function test_construct()
 	{
@@ -76,8 +72,6 @@ class acp_listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is subscribing events
-	*
-	* @access public
 	*/
 	public function test_getSubscribedEvents()
 	{
@@ -145,7 +139,6 @@ class acp_listener_test extends \phpbb_test_case
 	* Test the set_viglink_services event
 	*
 	* @dataProvider set_viglink_services_data
-	* @access public
 	*/
 	public function test_set_viglink_services($current_version, $versions, $expected)
 	{

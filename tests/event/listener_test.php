@@ -18,13 +18,11 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
 
-	/** @var \phpbb\viglink\tests\mock\template */
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
 	/**
 	* Setup test environment
-	*
-	* @access public
 	*/
 	public function setUp()
 	{
@@ -36,13 +34,12 @@ class listener_test extends \phpbb_test_case
 			'allow_viglink_phpbb' => 1,
 			'viglink_api_key' => '12345678901234567890123456789012',
 		));
-		$this->template = new \phpbb\viglink\tests\mock\template();
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->getMock();
 	}
 
 	/**
 	* Create the event listener
-	*
-	* @access protected
 	*/
 	protected function set_listener()
 	{
@@ -54,8 +51,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is constructed correctly
-	*
-	* @access public
 	*/
 	public function test_construct()
 	{
@@ -65,8 +60,6 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the event listener is subscribing events
-	*
-	* @access public
 	*/
 	public function test_getSubscribedEvents()
 	{
@@ -77,20 +70,20 @@ class listener_test extends \phpbb_test_case
 
 	/**
 	* Test the load_viglink event
-	*
-	* @access public
 	*/
 	public function test_load_viglink()
 	{
 		$this->set_listener();
 
+		$this->template->expects($this->once())
+			->method('assign_vars')
+			->with(array(
+				'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'],
+				'VIGLINK_API_KEY'	=> $this->config['viglink_api_key'],
+			));
+
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 		$dispatcher->addListener('core.viewtopic_post_row_after', array($this->listener, 'display_viglink'));
 		$dispatcher->dispatch('core.viewtopic_post_row_after');
-
-		$this->assertEquals(array(
-			'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'],
-			'VIGLINK_API_KEY'	=> $this->config['viglink_api_key'],
-		), $this->template->get_template_vars());
 	}
 }
