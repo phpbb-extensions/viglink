@@ -13,6 +13,18 @@ namespace phpbb\viglink\migrations;
 class viglink_data extends \phpbb\db\migration\migration
 {
 	/**
+	* Assign migration file dependencies for this migration
+	*
+	* @return array Array of migration files
+	* @static
+	* @access public
+	*/
+	static public function depends_on()
+	{
+		return array('\phpbb\db\migration\data\v31x\v312');
+	}
+
+	/**
 	* Skip this migration if VigLink data already exists
 	*
 	* @return bool True if data exists, false otherwise
