@@ -15,7 +15,7 @@ namespace phpbb\viglink\acp;
 */
 class viglink_info
 {
-	function module()
+	public function module()
 	{
 		return array(
 			'filename'	=> '\phpbb\viglink\acp\viglink_module',
