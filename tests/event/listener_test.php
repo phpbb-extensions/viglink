@@ -18,7 +18,7 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\template\template */
 	protected $template;
 
 	/**

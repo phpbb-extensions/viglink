@@ -12,6 +12,7 @@ namespace phpbb\viglink\tests;
 
 class helper_test extends \phpbb_test_case
 {
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
 	protected $cache;
 
 	public function setUp()
@@ -171,6 +172,7 @@ class helper_test extends \phpbb_test_case
 			'allow_viglink_phpbb' => 1,
 		));
 
+		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 		$viglink_helper = $this
 			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->setMethods(array(
