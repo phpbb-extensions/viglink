@@ -17,13 +17,13 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\acp_listener */
 	protected $acp_listener;
 
-	/** @var \phpbb\cache\service */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
 	protected $cache;
 
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \phpbb\viglink\acp\viglink_helper */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
 	public function setUp()
