@@ -46,7 +46,7 @@ class viglink_module
 		// Error if the form is invalid
 		if ($submit && !check_form_key($form_key))
 		{
-			$error[] = $user->lang['FORM_INVALID'];
+			$error[] = $user->lang('FORM_INVALID');
 		}
 
 		// Do not process form if invalid
@@ -82,11 +82,11 @@ class viglink_module
 		// Set a general error message if VigLink has been disabled by phpBB
 		if (!$config['allow_viglink_global'])
 		{
-			$error[] = $user->lang['ACP_VIGLINK_DISABLED_GLOBAL'];
+			$error[] = $user->lang('ACP_VIGLINK_DISABLED_GLOBAL');
 		}
 		else if (!$config['allow_viglink_phpbb'] && !$cfg_array['viglink_api_key'])
 		{
-			$error[] = $user->lang['ACP_VIGLINK_DISABLED_PHPBB'];
+			$error[] = $user->lang('ACP_VIGLINK_DISABLED_PHPBB');
 		}
 
 		$template->assign_vars(array(
