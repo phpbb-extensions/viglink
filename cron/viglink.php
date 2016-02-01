@@ -47,7 +47,7 @@ class viglink extends \phpbb\cron\task\base
 	{
 		try
 		{
-			$this->helper->set_viglink_services();
+			$this->helper->set_viglink_services(true);
 		}
 		catch (\RuntimeException $e)
 		{
