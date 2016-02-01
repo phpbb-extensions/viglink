@@ -1,3 +1,6 @@
+imports:
+    - { resource: cron.yml }
+
 services:
     phpbb.viglink.listener:
         class: phpbb\viglink\event\listener

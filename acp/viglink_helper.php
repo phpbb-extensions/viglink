@@ -58,5 +58,7 @@ class viglink_helper extends \phpbb\version_helper
 				$this->config->set($switch, (int) $data[$switch]);
 			}
 		}
+
+		$this->config->set('viglink_last_gc', time(), false);
 	}
 }
