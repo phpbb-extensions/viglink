@@ -26,11 +26,15 @@ class cron_test extends \phpbb_test_case
 		parent::setUp();
 
 		$this->config = new \phpbb\config\config(array('viglink_last_gc' => 0));
+		$log = $this->getMockBuilder('\phpbb\log\log')
+			->disableOriginalConstructor()
+			->getMock();
+		$user = new \phpbb\user('\phpbb\datetime');
 		$this->viglink_helper = $this->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper);
+		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper, $log, $user);
 	}
 
 	public function set_config()
