@@ -16,7 +16,7 @@ namespace phpbb\viglink\acp;
 class viglink_helper extends \phpbb\version_helper
 {
 	/**
-	 * Obtains the latest VigLink allow/disallow information from phpBB
+	 * Obtains the latest VigLink services information from phpBB
 	 *
 	 * @param bool $force_update Ignores cached data. Defaults to false.
 	 * @param bool $force_cache Force the use of the cache. Override $force_update.
@@ -35,27 +35,28 @@ class viglink_helper extends \phpbb\version_helper
 			return $self->compare($data['current'], $current_version, '>=');
 		});
 
-		array_map(array($this, 'set_viglink_switches'), $versions);
+		array_map(array($this, 'set_viglink_configs'), $versions);
 	}
 
 	/**
-	 * Allows/Disallows VigLink services as determined by phpBB
+	 * Sets VigLink service configs as determined by phpBB
 	 *
-	 * @param array $data Array of version file data.
+	 * @param array $data Array of viglink file data.
 	 * @return null
 	 */
-	protected function set_viglink_switches($data)
+	protected function set_viglink_configs($data)
 	{
-		$viglink_switches = array(
+		$viglink_configs = array(
 			'allow_viglink_phpbb',
 			'allow_viglink_global',
+			'phpbb_viglink_api_key',
 		);
 
-		foreach ($viglink_switches as $switch)
+		foreach ($viglink_configs as $cfg_name)
 		{
-			if (isset($data[$switch]) && ($data[$switch] != $this->config[$switch] || !isset($this->config[$switch])))
+			if (isset($data[$cfg_name]) && ($data[$cfg_name] != $this->config[$cfg_name] || !isset($this->config[$cfg_name])))
 			{
-				$this->config->set($switch, (int) $data[$switch]);
+				$this->config->set($cfg_name, $data[$cfg_name]);
 			}
 		}
 

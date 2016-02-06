@@ -41,16 +41,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.1',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> false,
 					'allow_viglink_phpbb'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -60,16 +63,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -79,16 +85,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1-a2',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.0',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> false,
 					'allow_viglink_phpbb'		=> true,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -98,16 +107,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -117,16 +129,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.1',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> false,
 					'allow_viglink_phpbb'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -136,16 +151,19 @@ class helper_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> false,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.0-a2',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> true,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -154,6 +172,7 @@ class helper_test extends \phpbb_test_case
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
+					'phpbb_viglink_api_key'		=> '',
 				),
 			),
 		);
@@ -169,7 +188,8 @@ class helper_test extends \phpbb_test_case
 		$config = new \phpbb\config\config(array(
 			'version' => $current_version,
 			'allow_viglink_global' => 1,
-			'allow_viglink_phpbb' => 1,
+			'allow_viglink_phpbb'  => 1,
+			'phpbb_viglink_api_key'=> '',
 		));
 
 		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
