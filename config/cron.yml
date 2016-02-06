@@ -1,0 +1,13 @@
+services:
+# ----- Cron tasks -----
+    phpbb.viglink.cron.task.viglink:
+        class: phpbb\viglink\cron\viglink
+        arguments:
+            - '@config'
+            - '@phpbb.viglink.helper'
+            - '@log'
+            - '@user'
+        calls:
+            - [set_name, [cron.task.viglink]]
+        tags:
+            - { name: cron.task }
