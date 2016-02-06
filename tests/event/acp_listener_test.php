@@ -93,16 +93,19 @@ class acp_listener_test extends \phpbb_test_case
 						'current'		=> '1.0.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'1.1'	=> array(
 						'current'		=> '1.1.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'bar',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
@@ -112,16 +115,19 @@ class acp_listener_test extends \phpbb_test_case
 						'current'		=> '2.0.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 					'2.1'	=> array(
 						'current'		=> '2.1.1',
 						'allow_viglink_global'		=> true,
 						'allow_viglink_phpbb'		=> false,
+						'phpbb_viglink_api_key'		=> 'foo',
 					),
 				),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> false,
+					'phpbb_viglink_api_key'		=> 'foo',
 				),
 			),
 			array(
@@ -130,6 +136,7 @@ class acp_listener_test extends \phpbb_test_case
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
+					'phpbb_viglink_api_key'		=> '',
 				),
 			),
 		);
@@ -145,7 +152,8 @@ class acp_listener_test extends \phpbb_test_case
 		$this->config = new \phpbb\config\config(array(
 			'version' => $current_version,
 			'allow_viglink_global' => 1,
-			'allow_viglink_phpbb' => 1,
+			'allow_viglink_phpbb'  => 1,
+			'phpbb_viglink_api_key'=> '',
 		));
 
 		$this->helper = $this
