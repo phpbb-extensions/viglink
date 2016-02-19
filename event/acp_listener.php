@@ -26,6 +26,9 @@ class acp_listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template */
 	protected $template;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
@@ -33,14 +36,16 @@ class acp_listener implements EventSubscriberInterface
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config $config
+	 * @param \phpbb\language\language $language
 	 * @param \phpbb\request\request $request phpBB request
 	 * @param \phpbb\template\template $template
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
 		$this->config = $config;
+		$this->language = $language;
 		$this->request = $request;
 		$this->template = $template;
 		$this->helper = $viglink_helper;
@@ -87,15 +92,17 @@ class acp_listener implements EventSubscriberInterface
 	 */
 	public function update_viglink_settings($event)
 	{
+		$this->language->add_lang('viglink_module_acp', 'phpbb/viglink');
+
 		$viglink_setting = $this->request->variable('enable-viglink', false);
 
 		if (!empty($event['submit']))
 		{
-			$this->config->set('allow_viglink_phpbb', $viglink_setting);
+			$this->config->set('viglink_enabled', $viglink_setting);
 		}
 
 		$this->template->assign_vars(array(
-			'S_ENABLE_VIGLINK'		=> !empty($this->config['enable_viglink']),
+			'S_ENABLE_VIGLINK'		=> !empty($this->config['viglink_enabled']),
 		));
 	}
 }

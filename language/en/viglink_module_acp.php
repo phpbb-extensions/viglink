@@ -40,6 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_VIGLINK_SETTINGS'			=> 'VigLink settings',
 	'ACP_VIGLINK_SETTINGS_EXPLAIN'	=> 'VigLink is a non-invasive third-party service that will monetize existing links posted by users of your forum. When visitors click on those existing links and perform certain actions, such as shopping, the merchants pay VigLink a commission, of which a share is donated to the phpBB project. By enabling VigLink and donating proceeds to the phpBB project, you are supporting our open source organization and ensuring our continued financial security.',
+	'ACP_VIGLINK_SETTINGS_EXTENDED'	=> 'Viglink is a non-invasive third-party service that will monetize existing links posted by users of your forum. When visitors click on those existing links and perform certain actions, such as shopping, the merchants pay VigLink a commission, of which a share is donated to the phpBB project. By agreeing to enable VigLink and donating proceeds to the phpBB project, you are supporting our open source organization and ensuring our continued financial security.<br /><br />You can change these settings at any time in VigLink settings panel.',
 	'ACP_VIGLINK_ENABLE'			=> 'Enable VigLink',
 	'ACP_VIGLINK_ENABLE_EXPLAIN'	=> 'Enables use of VigLink services.',
 	'ACP_VIGLINK_EARNINGS'			=> 'Claim your own earnings (optional)',
