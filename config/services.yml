@@ -13,6 +13,9 @@ services:
     phpbb.viglink.acp_listener:
         class: phpbb\viglink\event\acp_listener
         arguments:
+            - '@config'
+            - '@request'
+            - '@template'
             - '@phpbb.viglink.helper'
         tags:
             - { name: event.listener }

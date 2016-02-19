@@ -17,17 +17,32 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 */
 class acp_listener implements EventSubscriberInterface
 {
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\request\request */
+	protected $request;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
 	/** @var \phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
 	/**
 	 * Constructor
 	 *
+	 * @param \phpbb\config\config $config
+	 * @param \phpbb\request\request $request phpBB request
+	 * @param \phpbb\template\template $template
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
 	 * @access public
 	 */
-	public function __construct(\phpbb\viglink\acp\viglink_helper $viglink_helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
+		$this->config = $config;
+		$this->request = $request;
+		$this->template = $template;
 		$this->helper = $viglink_helper;
 	}
 
@@ -42,6 +57,7 @@ class acp_listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.acp_main_notice'		=> 'set_viglink_services',
+			'core.acp_help_phpbb_submit_before'	=> 'update_viglink_settings',
 		);
 	}
 
@@ -62,5 +78,24 @@ class acp_listener implements EventSubscriberInterface
 		{
 			// fail silently
 		}
+	}
+
+	/**
+	 * Update viglink settings
+	 *
+	 * @param array $event Event data
+	 */
+	public function update_viglink_settings($event)
+	{
+		$viglink_setting = $this->request->variable('enable-viglink', false);
+
+		if (!empty($event['submit']))
+		{
+			$this->config->set('allow_viglink_phpbb', $viglink_setting);
+		}
+
+		$this->template->assign_vars(array(
+			'S_ENABLE_VIGLINK'		=> !empty($this->config['enable_viglink']),
+		));
 	}
 }
