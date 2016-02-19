@@ -21,6 +21,9 @@ class cron_test extends \phpbb_test_case
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $viglink_helper;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -29,7 +32,10 @@ class cron_test extends \phpbb_test_case
 		$log = $this->getMockBuilder('\phpbb\log\log')
 			->disableOriginalConstructor()
 			->getMock();
-		$user = new \phpbb\user('\phpbb\datetime');
+		$this->language = $this->getMockBuilder('\phpbb\language\language')
+			->disableOriginalConstructor()
+			->getMock();
+		$user = new \phpbb\user($this->language, '\phpbb\datetime');
 		$this->viglink_helper = $this->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->disableOriginalConstructor()
 			->getMock();
