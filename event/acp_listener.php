@@ -20,7 +20,7 @@ class acp_listener implements EventSubscriberInterface
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \phpbb\request\request */
+	/** @var \phpbb\request\request_interface */
 	protected $request;
 
 	/** @var \phpbb\template\template */
@@ -37,12 +37,12 @@ class acp_listener implements EventSubscriberInterface
 	 *
 	 * @param \phpbb\config\config $config
 	 * @param \phpbb\language\language $language
-	 * @param \phpbb\request\request $request phpBB request
+	 * @param \phpbb\request\request_interface $request phpBB request
 	 * @param \phpbb\template\template $template
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
 		$this->config = $config;
 		$this->language = $language;

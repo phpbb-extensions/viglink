@@ -66,7 +66,9 @@ class acp_listener_test extends \phpbb_test_case
 		;
 
 		$this->path = dirname(__FILE__) . '/../fixtures/';
-		$this->request = new \phpbb\request\request(new \phpbb\request\type_cast_helper(), false);
+		$this->request = $this->getMockBuilder('\phpbb\request\request_interface')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->disableOriginalConstructor()
 			->getMock();
@@ -184,5 +186,57 @@ class acp_listener_test extends \phpbb_test_case
 		{
 			$this->assertEquals($expected_value, $this->config[$config_name]);
 		}
+	}
+
+	public function data_update_viglink_settings()
+	{
+		return array(
+			array(
+				array('viglink_enabled' => true),
+				array(''),
+				'',
+				true,
+			),
+			array(
+				array('viglink_enabled' => true),
+				array(''),
+				'0',
+				true,
+			),
+			array(
+				array('viglink_enabled' => true),
+				array('submit' => true),
+				'0',
+				'0',
+			),
+			array(
+				array('viglink_enabled' => true),
+				array('submit' => false),
+				'0',
+				true,
+			),
+			array(
+				array('viglink_enabled' => false),
+				array('submit' => true),
+				true,
+				true,
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider data_update_viglink_settings
+	 */
+	public function test_update_viglink_settings($predefined_config, $event_ary, $request_return, $expected_setting)
+	{
+		$this->config = new \phpbb\config\config($predefined_config);
+		$this->request->expects($this->any())
+			->method('variable')
+			->willReturn($request_return);
+		$this->set_listener();
+
+		$this->acp_listener->update_viglink_settings($event_ary);
+
+		$this->assertEquals($this->config['viglink_enabled'], $expected_setting);
 	}
 }
