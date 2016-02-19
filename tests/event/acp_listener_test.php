@@ -23,6 +23,15 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
+	/** @var \phpbb\request\request */
+	protected $request;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
@@ -38,6 +47,10 @@ class acp_listener_test extends \phpbb_test_case
 
 		$this->config = new \phpbb\config\config(array());
 
+		$this->language = $this->getMockBuilder('\phpbb\language\language')
+			->disableOriginalConstructor()
+			->getMock();
+
 		$this->helper = $this
 			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->setMethods(array(
@@ -47,12 +60,16 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
-				new \phpbb\user('\phpbb\datetime'),
+				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
 		;
 
 		$this->path = dirname(__FILE__) . '/../fixtures/';
+		$this->request = new \phpbb\request\request(new \phpbb\request\type_cast_helper(), false);
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 	/**
@@ -61,6 +78,10 @@ class acp_listener_test extends \phpbb_test_case
 	protected function set_listener()
 	{
 		$this->acp_listener = new \phpbb\viglink\event\acp_listener(
+			$this->config,
+			$this->language,
+			$this->request,
+			$this->template,
 			$this->helper
 		);
 	}
@@ -81,6 +102,7 @@ class acp_listener_test extends \phpbb_test_case
 	{
 		$this->assertEquals(array(
 			'core.acp_main_notice',
+			'core.acp_help_phpbb_submit_before',
 		), array_keys(\phpbb\viglink\event\acp_listener::getSubscribedEvents()));
 	}
 
@@ -141,7 +163,7 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
-				new \phpbb\user('\phpbb\datetime'),
+				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
 		;
