@@ -47,6 +47,7 @@ class viglink_test extends \phpbb_functional_test_case
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$values = $form->getValues();
 		$values['viglink_api_key'] = $this->sample_viglink_key;
+		$values['viglink_enabled'] = true;
 		$form->setValues($values);
 
 		// Submit form and test success
