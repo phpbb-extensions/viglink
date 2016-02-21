@@ -26,6 +26,8 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
+	protected $path;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -49,6 +51,8 @@ class acp_listener_test extends \phpbb_test_case
 			))
 			->getMock()
 		;
+
+		$this->path = dirname(__FILE__) . '/../fixtures/';
 	}
 
 	/**
@@ -87,51 +91,23 @@ class acp_listener_test extends \phpbb_test_case
 	{
 		return array(
 			array(
-				'1.0.0', // Board version is less than current versions
+				'3.0.0', // Board version is less than current versions
 				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> false,
+					'allow_viglink_global'		=> false,
 					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
-				'2.1.1', // Board version is equal to current versions
+				'3.2.0', // Board version is equal to current versions
 				array(
-					'2.0'	=> array(
-						'current'		=> '2.0.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'2.1'	=> array(
-						'current'		=> '2.1.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> false,
-					'phpbb_viglink_api_key'		=> 'foo',
+					'allow_viglink_global'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
-				'2.0.0', // No current version data was available
+				'4.0.0', // No current version data was available
 				array(),
 				array(
 					'allow_viglink_global'		=> true,
@@ -147,7 +123,7 @@ class acp_listener_test extends \phpbb_test_case
 	*
 	* @dataProvider set_viglink_services_data
 	*/
-	public function test_set_viglink_services($current_version, $versions, $expected)
+	public function test_set_viglink_services($current_version, $expected)
 	{
 		$this->config = new \phpbb\config\config(array(
 			'version' => $current_version,
@@ -172,9 +148,11 @@ class acp_listener_test extends \phpbb_test_case
 
 		$this->set_listener();
 
+		$versions = json_decode(file_get_contents($this->path . 'viglink.json'), true);
+
 		$this->helper->expects($this->any())
 			->method('get_versions_matching_stability')
-			->will($this->returnValue($versions));
+			->will($this->returnValue($versions['stable']));
 
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 		$dispatcher->addListener('core.acp_main_notice', array($this->acp_listener, 'set_viglink_services'));

@@ -15,6 +15,8 @@ class helper_test extends \phpbb_test_case
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
 	protected $cache;
 
+	protected $path;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -26,6 +28,8 @@ class helper_test extends \phpbb_test_case
 		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
 			->disableOriginalConstructor()
 			->getMock();
+
+		$this->path = dirname(__FILE__) . '/fixtures/';
 	}
 
 	/**
@@ -35,143 +39,42 @@ class helper_test extends \phpbb_test_case
 	{
 		return array(
 			array(
-				'1.0.0', // Board version is less than current version on branch 1, get setting from latest version
+				'3.0.0', // Board version is less than current version on branch 1, get setting from latest version
 				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.1',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> false,
 					'allow_viglink_phpbb'		=> false,
-					'phpbb_viglink_api_key'		=> 'bar',
-				),
-			),
-			array(
-				'1.0.1', // Board version is equal to current version on branch 1, get setting from latest version
-				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> true,
-					'allow_viglink_phpbb'		=> false,
-					'phpbb_viglink_api_key'		=> 'bar',
-				),
-			),
-			array(
-				'1.0.1-a1', // Board version is less than current version on branch 1, get setting from latest version
-				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1-a2',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.0',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
 					'allow_viglink_global'		=> false,
-					'allow_viglink_phpbb'		=> true,
 					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
-				'1.1.0', // Board version is less than current version on branch 2
+				'3.1.0-a1', // Board version is less than current version on branch 1, get setting from latest version
 				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> true,
-					'allow_viglink_phpbb'		=> true,
-					'phpbb_viglink_api_key'		=> 'bar',
-				),
-			),
-			array(
-				'1.1.1', // Board version is equal to current version on branch 2
-				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.1',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> false,
 					'allow_viglink_phpbb'		=> false,
+					'allow_viglink_global'		=> false,
 					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
-				'1.1.0-a1', // Board version is less than current version on branch 2
+				'3.1.0', // Board version is equal to current version on branch 1, get setting from latest version
 				array(
-					'1.0'	=> array(
-						'current'		=> '1.0.1',
-						'allow_viglink_global'		=> false,
-						'allow_viglink_phpbb'		=> false,
-						'phpbb_viglink_api_key'		=> 'foo',
-					),
-					'1.1'	=> array(
-						'current'		=> '1.1.0-a2',
-						'allow_viglink_global'		=> true,
-						'allow_viglink_phpbb'		=> true,
-						'phpbb_viglink_api_key'		=> 'bar',
-					),
-				),
-				array(
-					'allow_viglink_global'		=> true,
-					'allow_viglink_phpbb'		=> true,
+					'allow_viglink_phpbb'		=> false,
+					'allow_viglink_global'		=> false,
 					'phpbb_viglink_api_key'		=> 'bar',
 				),
 			),
 			array(
-				'1.1.0', // Current version data not available, existing values unchanged
-				array(),
+				'3.2.0', // Board version is equal to current version on branch 2
 				array(
-					'allow_viglink_global'		=> true,
+					'allow_viglink_phpbb'		=> false,
+					'allow_viglink_global'		=> false,
+					'phpbb_viglink_api_key'		=> 'bar',
+				),
+			),
+			array(
+				'4.0.0', // Current version data not available, existing values unchanged
+				array(
 					'allow_viglink_phpbb'		=> true,
+					'allow_viglink_global'		=> true,
 					'phpbb_viglink_api_key'		=> '',
 				),
 			),
@@ -183,7 +86,7 @@ class helper_test extends \phpbb_test_case
 	 *
 	 * @dataProvider set_viglink_services_data
 	 */
-	public function test_set_viglink_services($current_version, $versions, $expected)
+	public function test_set_viglink_services($current_version, $expected)
 	{
 		$config = new \phpbb\config\config(array(
 			'version' => $current_version,
@@ -207,9 +110,11 @@ class helper_test extends \phpbb_test_case
 			->getMock()
 		;
 
+		$versions = json_decode(file_get_contents($this->path . 'viglink.json'), true);
+
 		$viglink_helper->expects($this->any())
 			->method('get_versions_matching_stability')
-			->will($this->returnValue($versions));
+			->will($this->returnValue($versions['stable']));
 
 		$viglink_helper->set_viglink_services();
 
