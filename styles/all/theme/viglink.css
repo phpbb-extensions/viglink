@@ -8,7 +8,11 @@
 */
 
 .viglink-header {
-	background: url('http://www.viglink.com/wp-content/uploads/2015/05/favicon-96x96.png') no-repeat 0 0;
-	padding-left: 30px;
-	background-size: 25px;
+	background: url('images/VigLink_logo.png') no-repeat 0 0;
+	padding-left: 142px;
+	padding-bottom: 12px;
+}
+
+.send-stats-tile > h2.viglink-header-h2 {
+	margin-bottom: 10px;
 }
