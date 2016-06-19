@@ -19,7 +19,6 @@ class viglink_module
 	{
 		global $config, $request,  $template, $user;
 
-		$user->add_lang('acp/common');
 		$user->add_lang_ext('phpbb/viglink', 'viglink_module_acp');
 
 		$this->tpl_name = 'acp_viglink';
