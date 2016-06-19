@@ -10,7 +10,7 @@
 
 namespace phpbb\viglink\tests\event;
 
-require_once dirname(__FILE__) . '/../../../../../includes/functions.php';
+require_once __DIR__ . '/../../../../../includes/functions.php';
 
 class acp_listener_test extends \phpbb_test_case
 {
@@ -52,7 +52,7 @@ class acp_listener_test extends \phpbb_test_case
 			->getMock()
 		;
 
-		$this->path = dirname(__FILE__) . '/../fixtures/';
+		$this->path = __DIR__ . '/../fixtures/';
 	}
 
 	/**
