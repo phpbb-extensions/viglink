@@ -23,6 +23,15 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
+	/** @var \phpbb\request\request */
+	protected $request;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $helper;
 
@@ -38,6 +47,10 @@ class acp_listener_test extends \phpbb_test_case
 
 		$this->config = new \phpbb\config\config(array());
 
+		$this->language = $this->getMockBuilder('\phpbb\language\language')
+			->disableOriginalConstructor()
+			->getMock();
+
 		$this->helper = $this
 			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->setMethods(array(
@@ -47,12 +60,18 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
-				new \phpbb\user('\phpbb\datetime'),
+				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
 		;
 
 		$this->path = dirname(__FILE__) . '/../fixtures/';
+		$this->request = $this->getMockBuilder('\phpbb\request\request_interface')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 	/**
@@ -61,6 +80,10 @@ class acp_listener_test extends \phpbb_test_case
 	protected function set_listener()
 	{
 		$this->acp_listener = new \phpbb\viglink\event\acp_listener(
+			$this->config,
+			$this->language,
+			$this->request,
+			$this->template,
 			$this->helper
 		);
 	}
@@ -81,6 +104,7 @@ class acp_listener_test extends \phpbb_test_case
 	{
 		$this->assertEquals(array(
 			'core.acp_main_notice',
+			'core.acp_help_phpbb_submit_before',
 		), array_keys(\phpbb\viglink\event\acp_listener::getSubscribedEvents()));
 	}
 
@@ -141,7 +165,7 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
-				new \phpbb\user('\phpbb\datetime'),
+				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
 		;
@@ -162,5 +186,57 @@ class acp_listener_test extends \phpbb_test_case
 		{
 			$this->assertEquals($expected_value, $this->config[$config_name]);
 		}
+	}
+
+	public function data_update_viglink_settings()
+	{
+		return array(
+			array(
+				array('viglink_enabled' => true),
+				array(''),
+				'',
+				true,
+			),
+			array(
+				array('viglink_enabled' => true),
+				array(''),
+				'0',
+				true,
+			),
+			array(
+				array('viglink_enabled' => true),
+				array('submit' => true),
+				'0',
+				'0',
+			),
+			array(
+				array('viglink_enabled' => true),
+				array('submit' => false),
+				'0',
+				true,
+			),
+			array(
+				array('viglink_enabled' => false),
+				array('submit' => true),
+				true,
+				true,
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider data_update_viglink_settings
+	 */
+	public function test_update_viglink_settings($predefined_config, $event_ary, $request_return, $expected_setting)
+	{
+		$this->config = new \phpbb\config\config($predefined_config);
+		$this->request->expects($this->any())
+			->method('variable')
+			->willReturn($request_return);
+		$this->set_listener();
+
+		$this->acp_listener->update_viglink_settings($event_ary);
+
+		$this->assertEquals($this->config['viglink_enabled'], $expected_setting);
 	}
 }
