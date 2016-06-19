@@ -10,8 +10,6 @@
 
 namespace phpbb\viglink\tests\event;
 
-require_once __DIR__ . '/../../../../../includes/functions.php';
-
 class acp_listener_test extends \phpbb_test_case
 {
 	/** @var \phpbb\viglink\event\acp_listener */
