@@ -17,6 +17,9 @@ class helper_test extends \phpbb_test_case
 
 	protected $path;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -30,6 +33,9 @@ class helper_test extends \phpbb_test_case
 			->getMock();
 
 		$this->path = dirname(__FILE__) . '/fixtures/';
+		$this->language = $this->getMockBuilder('\phpbb\language\language')
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 	/**
@@ -105,7 +111,7 @@ class helper_test extends \phpbb_test_case
 				$this->cache,
 				$config,
 				new \phpbb\file_downloader(),
-				new \phpbb\user('\phpbb\datetime'),
+				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
 		;
