@@ -58,6 +58,8 @@ class listener implements EventSubscriberInterface
 	*/
 	public function display_viglink()
 	{
+		$viglink_key = '';
+
 		if ($this->config['allow_viglink_global'] && $this->config['viglink_api_key'])
 		{
 			// Use custom API key if set and if VigLink is allowed for all
@@ -68,13 +70,9 @@ class listener implements EventSubscriberInterface
 			// Use phpBB API key if VigLink is allowed for phpBB
 			$viglink_key = $this->config['phpbb_viglink_api_key'];
 		}
-		else
-		{
-			$viglink_key = '';
-		}
 
 		$this->template->assign_vars(array(
-			'VIGLINK_ENABLED'	=> ($this->config['viglink_enabled'] && $viglink_key) ? true : false,
+			'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'] && $viglink_key,
 			'VIGLINK_API_KEY'	=> $viglink_key,
 		));
 	}

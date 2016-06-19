@@ -26,7 +26,7 @@ class viglink_module
 
 		$submit = $request->is_set_post('submit');
 
-		if ($mode != 'settings')
+		if ($mode !== 'settings')
 		{
 			return;
 		}
@@ -89,7 +89,7 @@ class viglink_module
 		}
 
 		$template->assign_vars(array(
-			'S_ERROR'			=> (sizeof($error)) ? true : false,
+			'S_ERROR'			=> (bool) sizeof($error),
 			'ERROR_MSG'			=> implode('<br />', $error),
 
 			'VIGLINK_ENABLED'	=> $cfg_array['viglink_enabled'],

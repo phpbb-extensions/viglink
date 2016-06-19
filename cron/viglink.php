@@ -67,8 +67,8 @@ class viglink extends \phpbb\cron\task\base
 		}
 		catch (\RuntimeException $e)
 		{
-			$user_id = (empty($this->user->data)) ? ANONYMOUS : $this->user->data['user_id'];
-			$user_ip = (empty($this->user->ip)) ? '' : $this->user->ip;
+			$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
+			$user_ip = empty($this->user->ip) ? '' : $this->user->ip;
 
 			$this->log->add('critical', $user_id, $user_ip, 'LOG_VIGLINK_CHECK_FAIL', false, array($e->getMessage()));
 		}
