@@ -108,7 +108,6 @@ class acp_listener_test extends \phpbb_test_case
 			),
 			array(
 				'4.0.0', // No current version data was available
-				array(),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
