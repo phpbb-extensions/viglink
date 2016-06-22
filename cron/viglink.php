@@ -79,7 +79,7 @@ class viglink extends \phpbb\cron\task\base
 	 */
 	public function is_runnable()
 	{
-		return true;
+		return (bool) $this->config['viglink_enabled'];
 	}
 
 	/**
