@@ -54,7 +54,7 @@ class viglink_helper extends \phpbb\version_helper
 
 		foreach ($viglink_configs as $cfg_name)
 		{
-			if (isset($data[$cfg_name]) && ($data[$cfg_name] != $this->config[$cfg_name] || !isset($this->config[$cfg_name])))
+			if (array_key_exists($cfg_name, $data) && ($data[$cfg_name] != $this->config[$cfg_name] || !isset($this->config[$cfg_name])))
 			{
 				$this->config->set($cfg_name, $data[$cfg_name]);
 			}
