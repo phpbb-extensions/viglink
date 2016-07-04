@@ -28,7 +28,7 @@ class cron_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
-		$this->config = new \phpbb\config\config(array('viglink_last_gc' => 0));
+		$this->config = new \phpbb\config\config(array('viglink_last_gc' => 0, 'viglink_enabled' => 1));
 		$log = $this->getMockBuilder('\phpbb\log\log')
 			->disableOriginalConstructor()
 			->getMock();

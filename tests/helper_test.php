@@ -32,7 +32,7 @@ class helper_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->path = dirname(__FILE__) . '/fixtures/';
+		$this->path = __DIR__ . '/fixtures/';
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
 			->getMock();
