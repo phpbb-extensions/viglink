@@ -10,8 +10,6 @@
 
 namespace phpbb\viglink\tests\event;
 
-require_once dirname(__FILE__) . '/../../../../../includes/functions.php';
-
 class acp_listener_test extends \phpbb_test_case
 {
 	/** @var \phpbb\viglink\event\acp_listener */
@@ -65,7 +63,7 @@ class acp_listener_test extends \phpbb_test_case
 			->getMock()
 		;
 
-		$this->path = dirname(__FILE__) . '/../fixtures/';
+		$this->path = __DIR__ . '/../fixtures/';
 		$this->request = $this->getMockBuilder('\phpbb\request\request_interface')
 			->disableOriginalConstructor()
 			->getMock();
@@ -132,7 +130,6 @@ class acp_listener_test extends \phpbb_test_case
 			),
 			array(
 				'4.0.0', // No current version data was available
-				array(),
 				array(
 					'allow_viglink_global'		=> true,
 					'allow_viglink_phpbb'		=> true,
