@@ -93,6 +93,11 @@ class viglink_module
 			}
 		}
 
+		if (!isset($config['questionnaire_unique_id']))
+		{
+			$config->set('questionnaire_unique_id', unique_id());
+		}
+
 		// Set a general error message if VigLink has been disabled by phpBB
 		if (!$config['allow_viglink_global'])
 		{
@@ -104,13 +109,15 @@ class viglink_module
 		}
 
 		$template->assign_vars(array(
-			'S_ERROR'			=> (bool) sizeof($error),
-			'ERROR_MSG'			=> implode('<br />', $error),
+			'S_ERROR'				=> (bool) sizeof($error),
+			'ERROR_MSG'				=> implode('<br />', $error),
+			'USE_PHPBB_API_KEY'		=> $config['allow_viglink_phpbb'] && $config['viglink_enabled'] && !$cfg_array['viglink_api_key'],
 
-			'VIGLINK_ENABLED'	=> $cfg_array['viglink_enabled'],
-			'VIGLINK_API_KEY'	=> $cfg_array['viglink_api_key'],
+			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
+			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
+			'U_VIGLINK_CONVERT'		=> 'https://www.phpbb.com/viglink/convert.php?subId=' .  md5($config['questionnaire_unique_id']) . '&amp;key=' . $config['phpbb_viglink_api_key'],
 
-			'U_ACTION'			=> $this->u_action,
+			'U_ACTION'				=> $this->u_action,
 		));
 	}
 }
