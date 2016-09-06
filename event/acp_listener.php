@@ -1,35 +1,35 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
-* Event listener
-*/
+ * ACP Event listener
+ */
 class acp_listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\config\config */
+	/** @var \phpbb\config\config $config Config object */
 	protected $config;
 
-	/** @var \phpbb\request\request_interface */
+	/** @var \phpbb\request\request_interface $request Request interface */
 	protected $request;
 
-	/** @var \phpbb\template\template */
+	/** @var \phpbb\template\template $template Template object */
 	protected $template;
 
-	/** @var \phpbb\language\language */
+	/** @var \phpbb\language\language $language Language object */
 	protected $language;
 
-	/** @var \phpbb\viglink\acp\viglink_helper */
+	/** @var \phpbb\viglink\acp\viglink_helper $helper VigLink helper object */
 	protected $helper;
 
 	/**
@@ -40,7 +40,6 @@ class acp_listener implements EventSubscriberInterface
 	 * @param \phpbb\request\request_interface $request phpBB request
 	 * @param \phpbb\template\template $template
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
-	 * @access public
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
@@ -52,27 +51,23 @@ class acp_listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Assign functions defined in this class to event listeners in the core
-	*
-	* @return array
-	* @static
-	* @access public
-	*/
+	 * @inheritDoc
+	 */
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.acp_main_notice'		=> 'set_viglink_services',
+			'core.acp_main_notice'				=> 'set_viglink_services',
 			'core.acp_help_phpbb_submit_before'	=> 'update_viglink_settings',
 		);
 	}
 
 	/**
-	* Check if phpBB is allowing VigLink services to run.
-	* VigLink will be disabled if phpBB is disallowing it to run.
-	*
-	* @return null
-	* @access public
-	*/
+	 * Check if phpBB is allowing VigLink services to run.
+	 *
+	 * VigLink will be disabled if phpBB is disallowing it to run.
+	 *
+	 * @return void
+	 */
 	public function set_viglink_services()
 	{
 		try
@@ -86,9 +81,11 @@ class acp_listener implements EventSubscriberInterface
 	}
 
 	/**
-	 * Update viglink settings
+	 * Update VigLink settings
 	 *
 	 * @param array $event Event data
+	 *
+	 * @return void
 	 */
 	public function update_viglink_settings($event)
 	{

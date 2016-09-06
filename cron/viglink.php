@@ -15,28 +15,16 @@ namespace phpbb\viglink\cron;
  */
 class viglink extends \phpbb\cron\task\base
 {
-	/**
-	 * Config object
-	 * @var \phpbb\config\config
-	 */
+	/** @var \phpbb\config\config $config Config object */
 	protected $config;
 
-	/**
-	 * Viglink helper object
-	 * @var \phpbb\viglink\acp\viglink_helper
-	 */
+	/** @var \phpbb\viglink\acp\viglink_helper $helper Viglink helper object */
 	protected $helper;
 
-	/**
-	 * Log object
-	 * @var \phpbb\log\log
-	 */
+	/** @var \phpbb\log\log $log Log object */
 	protected $log;
 
-	/**
-	 * User object
-	 * @var \phpbb\user
-	 */
+	/** @var \phpbb\user $user User object */
 	protected $user;
 
 	/**

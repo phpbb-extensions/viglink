@@ -1,12 +1,12 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink\acp;
 
@@ -19,9 +19,11 @@ class viglink_helper extends \phpbb\version_helper
 	 * Obtains the latest VigLink services information from phpBB
 	 *
 	 * @param bool $force_update Ignores cached data. Defaults to false.
-	 * @param bool $force_cache Force the use of the cache. Override $force_update.
-	 * @return null
+	 * @param bool $force_cache  Force the use of the cache. Override $force_update.
+	 *
 	 * @throws \RuntimeException
+	 *
+	 * @return void
 	 */
 	public function set_viglink_services($force_update = false, $force_cache = false)
 	{
@@ -41,8 +43,9 @@ class viglink_helper extends \phpbb\version_helper
 	/**
 	 * Sets VigLink service configs as determined by phpBB
 	 *
-	 * @param array $data Array of viglink file data.
-	 * @return null
+	 * @param array $data Array of VigLink file data.
+	 *
+	 * @return void
 	 */
 	protected function set_viglink_configs($data)
 	{

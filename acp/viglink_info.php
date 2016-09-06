@@ -1,18 +1,18 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink\acp;
 
 /**
-* @package module_install
-*/
+ * VigLink ACP module info
+ */
 class viglink_info
 {
 	public function module()

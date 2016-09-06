@@ -1,18 +1,18 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink;
 
 /**
-* Extension class for custom enable/disable/purge actions
-*/
+ * Extension class for custom enable/disable/purge actions
+ */
 class ext extends \phpbb\extension\base
 {
 	/**
@@ -23,7 +23,6 @@ class ext extends \phpbb\extension\base
 	 * Requires phpBB 3.2.0-b1 or greater
 	 *
 	 * @return bool
-	 * @access public
 	 */
 	public function is_enableable()
 	{
@@ -31,12 +30,15 @@ class ext extends \phpbb\extension\base
 	}
 
 	/**
-	* Check phpBB's VigLink switches and set them during install
-	*
-	* @param mixed $old_state State returned by previous call of this method
-	* @return mixed Returns false after last step, otherwise temporary state
-	* @access public
-	*/
+	 * Check phpBB's VigLink switches and set them during install
+	 *
+	 * @param	mixed	$old_state	The return value of the previous call
+	 *								of this method, or false on the first call
+	 *
+	 * @return	mixed				Returns false after last step, otherwise
+	 *								temporary state which is passed as an
+	 *								argument to the next step
+	 */
 	public function enable_step($old_state)
 	{
 		switch ($old_state)

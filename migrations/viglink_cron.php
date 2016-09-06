@@ -10,6 +10,9 @@
 
 namespace phpbb\viglink\migrations;
 
+/**
+ * Migration to install VigLink cron task data
+ */
 class viglink_cron extends \phpbb\db\migration\migration
 {
 	/**
