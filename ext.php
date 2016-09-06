@@ -41,38 +41,34 @@ class ext extends \phpbb\extension\base
 	 */
 	public function enable_step($old_state)
 	{
-		switch ($old_state)
+		if ($old_state === false)
 		{
-			case '': // Empty means nothing has run yet
+			/* @var \phpbb\cache\service $cache Cache service object */
+			$cache = $this->container->get('cache');
 
-				/* @var $cache \phpbb\cache\service */
-				$cache = $this->container->get('cache');
-				/* @var $config \phpbb\config\config */
-				$config = $this->container->get('config');
-				/* @var $file_downloader \phpbb\file_downloader */
-				$file_downloader = $this->container->get('file_downloader');
-				/* @var $user \phpbb\user */
-				$user = $this->container->get('user');
+			/* @var \phpbb\config\config $config Config object */
+			$config = $this->container->get('config');
 
-				$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
-				try
-				{
-					$viglink_helper->set_viglink_services();
-				}
-				catch (\RuntimeException $e)
-				{
-					// fail silently
-				}
-				return 'viglink';
+			/* @var \phpbb\file_downloader $file_downloader File downloader object*/
+			$file_downloader = $this->container->get('file_downloader');
 
-			break;
+			/* @var \phpbb\user $user user object */
+			$user = $this->container->get('user');
 
-			default:
+			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
 
-				// Run parent enable step method
-				return parent::enable_step($old_state);
+			try
+			{
+				$viglink_helper->set_viglink_services();
+			}
+			catch (\RuntimeException $e)
+			{
+				// fail silently
+			}
 
-			break;
+			return 'viglink';
 		}
+
+		return parent::enable_step($old_state);
 	}
 }
