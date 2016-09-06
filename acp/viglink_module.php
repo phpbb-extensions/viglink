@@ -20,9 +20,19 @@ class viglink_module
 
 	public function main($id, $mode)
 	{
-		global $config, $request,  $template, $user;
+		global $phpbb_container;
 
 		$user->add_lang_ext('phpbb/viglink', 'viglink_module_acp');
+		/** @var \phpbb\config\config $config Config object */
+		$config = $phpbb_container->get('config');
+
+
+		/** @var \phpbb\request\request $request Request object */
+		$request  = $phpbb_container->get('request');
+
+		/** @var \phpbb\template\template $template Template object */
+		$template = $phpbb_container->get('template');
+
 
 		$this->tpl_name = 'acp_viglink';
 		$this->page_title = $user->lang('ACP_VIGLINK_SETTINGS');
