@@ -111,7 +111,6 @@ class viglink_module
 		$template->assign_vars(array(
 			'S_ERROR'				=> (bool) sizeof($error),
 			'ERROR_MSG'				=> implode('<br />', $error),
-			'USE_PHPBB_API_KEY'		=> $config['allow_viglink_phpbb'] && $config['viglink_enabled'] && !$cfg_array['viglink_api_key'],
 
 			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
 			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
