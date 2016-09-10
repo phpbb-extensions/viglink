@@ -21,22 +21,17 @@ class viglink extends \phpbb\cron\task\base
 	/** @var \phpbb\viglink\acp\viglink_helper $helper Viglink helper object */
 	protected $helper;
 
-	/** @var \phpbb\user $user User object */
-	protected $user;
-
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config              $config         Config object
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
-	 * @param \phpbb\user                       $user           User object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper, \phpbb\user $user)
+	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
 		$this->config = $config;
 		$this->helper = $viglink_helper;
-		$this->user = $user;
 	}
 
 	/**

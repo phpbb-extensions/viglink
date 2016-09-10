@@ -32,12 +32,11 @@ class cron_test extends \phpbb_test_case
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
 			->getMock();
-		$user = new \phpbb\user($this->language, '\phpbb\datetime');
 		$this->viglink_helper = $this->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper, $user);
+		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper);
 	}
 
 	public function set_config()
