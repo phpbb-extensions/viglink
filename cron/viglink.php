@@ -21,9 +21,6 @@ class viglink extends \phpbb\cron\task\base
 	/** @var \phpbb\viglink\acp\viglink_helper $helper Viglink helper object */
 	protected $helper;
 
-	/** @var \phpbb\log\log $log Log object */
-	protected $log;
-
 	/** @var \phpbb\user $user User object */
 	protected $user;
 
@@ -32,15 +29,13 @@ class viglink extends \phpbb\cron\task\base
 	 *
 	 * @param \phpbb\config\config              $config         Config object
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
-	 * @param \phpbb\log\log                    $log            Log object
 	 * @param \phpbb\user                       $user           User object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper, \phpbb\log\log $log, \phpbb\user $user)
+	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper, \phpbb\user $user)
 	{
 		$this->config = $config;
 		$this->helper = $viglink_helper;
-		$this->log = $log;
 		$this->user = $user;
 	}
 
@@ -55,10 +50,7 @@ class viglink extends \phpbb\cron\task\base
 		}
 		catch (\RuntimeException $e)
 		{
-			$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
-			$user_ip = empty($this->user->ip) ? '' : $this->user->ip;
-
-			$this->log->add('critical', $user_id, $user_ip, 'LOG_VIGLINK_CHECK_FAIL', false, array($e->getMessage()));
+			$this->helper->log_viglink_error($e->getMessage());
 		}
 	}
 

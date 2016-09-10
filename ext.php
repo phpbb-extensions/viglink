@@ -58,7 +58,7 @@ class ext extends \phpbb\extension\base
 			/** @var \phpbb\user $user user object */
 			$user = $this->container->get('user');
 
-			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
+			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $log, $user);
 
 			try
 			{
@@ -66,10 +66,7 @@ class ext extends \phpbb\extension\base
 			}
 			catch (\RuntimeException $e)
 			{
-				$user_id = empty($user->data) ? ANONYMOUS : $user->data['user_id'];
-				$user_ip = empty($user->ip) ? '' : $user->ip;
-
-				$log->add('critical', $user_id, $user_ip, 'LOG_VIGLINK_CHECK_FAIL', false, array($e->getMessage()));
+				$viglink_helper->log_viglink_error($e->getMessage());
 			}
 
 			return 'viglink';

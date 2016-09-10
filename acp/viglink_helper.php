@@ -15,6 +15,15 @@ namespace phpbb\viglink\acp;
  */
 class viglink_helper extends \phpbb\version_helper
 {
+	/** @var \phpbb\log\log $log */
+	protected $log;
+
+	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\log\log $log, \phpbb\user $user)
+	{
+		parent::__construct($cache, $config, $file_downloader, $user);
+		$this->log = $log;
+	}
+
 	/**
 	 * Obtains the latest VigLink services information from phpBB
 	 *
@@ -64,5 +73,18 @@ class viglink_helper extends \phpbb\version_helper
 		}
 
 		$this->config->set('viglink_last_gc', time(), false);
+	}
+
+	/**
+	 * Log a VigLink error message to the error log
+	 *
+	 * @param string $message The error message
+	 */
+	public function log_viglink_error($message)
+	{
+		$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
+		$user_ip = empty($this->user->ip) ? '' : $this->user->ip;
+
+		$this->log->add('critical', $user_id, $user_ip, 'LOG_VIGLINK_CHECK_FAIL', false, array($message));
 	}
 }

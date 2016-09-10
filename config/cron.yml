@@ -5,7 +5,6 @@ services:
         arguments:
             - '@config'
             - '@phpbb.viglink.helper'
-            - '@log'
             - '@user'
         calls:
             - [set_name, [cron.task.viglink]]

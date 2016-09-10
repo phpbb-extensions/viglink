@@ -76,7 +76,7 @@ class acp_listener implements EventSubscriberInterface
 		}
 		catch (\RuntimeException $e)
 		{
-			// fail silently
+			$this->helper->log_viglink_error($e->getMessage());
 		}
 	}
 
