@@ -18,6 +18,15 @@ class viglink_helper extends \phpbb\version_helper
 	/** @var \phpbb\log\log $log */
 	protected $log;
 
+	/**
+	 * Constructor
+	 *
+	 * @param \phpbb\cache\service   $cache
+	 * @param \phpbb\config\config   $config
+	 * @param \phpbb\file_downloader $file_downloader
+	 * @param \phpbb\log\log         $log
+	 * @param \phpbb\user            $user
+	 */
 	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\log\log $log, \phpbb\user $user)
 	{
 		parent::__construct($cache, $config, $file_downloader, $user);
