@@ -16,7 +16,7 @@ namespace phpbb\viglink\migrations;
 class viglink_cron extends \phpbb\db\migration\migration
 {
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	static public function depends_on()
 	{
@@ -24,7 +24,7 @@ class viglink_cron extends \phpbb\db\migration\migration
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function effectively_installed()
 	{
@@ -32,7 +32,7 @@ class viglink_cron extends \phpbb\db\migration\migration
 	}
 
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
 	public function update_data()
 	{
