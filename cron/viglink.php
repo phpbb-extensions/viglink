@@ -35,7 +35,7 @@ class viglink extends \phpbb\cron\task\base
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public function run()
 	{
@@ -50,7 +50,7 @@ class viglink extends \phpbb\cron\task\base
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public function is_runnable()
 	{
@@ -58,7 +58,7 @@ class viglink extends \phpbb\cron\task\base
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public function should_run()
 	{

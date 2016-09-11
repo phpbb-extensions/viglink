@@ -51,7 +51,7 @@ class acp_listener implements EventSubscriberInterface
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	static public function getSubscribedEvents()
 	{
