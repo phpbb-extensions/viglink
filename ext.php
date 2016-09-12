@@ -1,18 +1,18 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink;
 
 /**
-* Extension class for custom enable/disable/purge actions
-*/
+ * Extension class for custom enable/disable/purge actions
+ */
 class ext extends \phpbb\extension\base
 {
 	/**
@@ -23,7 +23,6 @@ class ext extends \phpbb\extension\base
 	 * Requires phpBB 3.2.0-b1 or greater
 	 *
 	 * @return bool
-	 * @access public
 	 */
 	public function is_enableable()
 	{
@@ -31,46 +30,48 @@ class ext extends \phpbb\extension\base
 	}
 
 	/**
-	* Check phpBB's VigLink switches and set them during install
-	*
-	* @param mixed $old_state State returned by previous call of this method
-	* @return mixed Returns false after last step, otherwise temporary state
-	* @access public
-	*/
+	 * Check phpBB's VigLink switches and set them during install
+	 *
+	 * @param	mixed	$old_state	The return value of the previous call
+	 *								of this method, or false on the first call
+	 *
+	 * @return	mixed				Returns false after last step, otherwise
+	 *								temporary state which is passed as an
+	 *								argument to the next step
+	 */
 	public function enable_step($old_state)
 	{
-		switch ($old_state)
+		if ($old_state === false)
 		{
-			case '': // Empty means nothing has run yet
+			/** @var \phpbb\cache\service $cache Cache service object */
+			$cache = $this->container->get('cache');
 
-				/* @var $cache \phpbb\cache\service */
-				$cache = $this->container->get('cache');
-				/* @var $config \phpbb\config\config */
-				$config = $this->container->get('config');
-				/* @var $file_downloader \phpbb\file_downloader */
-				$file_downloader = $this->container->get('file_downloader');
-				/* @var $user \phpbb\user */
-				$user = $this->container->get('user');
+			/** @var \phpbb\config\config $config Config object */
+			$config = $this->container->get('config');
 
-				$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $user);
-				try
-				{
-					$viglink_helper->set_viglink_services();
-				}
-				catch (\RuntimeException $e)
-				{
-					// fail silently
-				}
-				return 'viglink';
+			/** @var \phpbb\file_downloader $file_downloader File downloader object*/
+			$file_downloader = $this->container->get('file_downloader');
 
-			break;
+			/** @var \phpbb\log\log $log */
+			$log = $this->container->get('log');
 
-			default:
+			/** @var \phpbb\user $user user object */
+			$user = $this->container->get('user');
 
-				// Run parent enable step method
-				return parent::enable_step($old_state);
+			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $log, $user);
 
-			break;
+			try
+			{
+				$viglink_helper->set_viglink_services();
+			}
+			catch (\RuntimeException $e)
+			{
+				$viglink_helper->log_viglink_error($e->getMessage());
+			}
+
+			return 'viglink';
 		}
+
+		return parent::enable_step($old_state);
 	}
 }

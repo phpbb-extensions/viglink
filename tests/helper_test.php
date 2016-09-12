@@ -15,10 +15,14 @@ class helper_test extends \phpbb_test_case
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
 	protected $cache;
 
+	/** @var string Path to test fixtures */
 	protected $path;
 
 	/** @var \phpbb\language\language */
 	protected $language;
+
+	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
+	protected $log;
 
 	public function setUp()
 	{
@@ -36,6 +40,37 @@ class helper_test extends \phpbb_test_case
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
 			->getMock();
+
+		$this->log = $this->getMockBuilder('\phpbb\log\log')
+			->disableOriginalConstructor()
+			->getMock();
+	}
+
+	/**
+	 * Get viglink_helper mock object
+	 *
+	 * @param \phpbb\config\config $config
+	 * @return \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject
+	 */
+	public function get_viglink_helper($config)
+	{
+		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
+		$viglink_helper = $this
+			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
+			->setMethods(array(
+				'get_versions_matching_stability',
+			))
+			->setConstructorArgs(array(
+				$this->cache,
+				$config,
+				new \phpbb\file_downloader(),
+				$this->log,
+				new \phpbb\user($this->language, '\phpbb\datetime'),
+			))
+			->getMock()
+		;
+
+		return $viglink_helper;
 	}
 
 	/**
@@ -101,20 +136,7 @@ class helper_test extends \phpbb_test_case
 			'phpbb_viglink_api_key'=> '',
 		));
 
-		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
-		$viglink_helper = $this
-			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
-			->setMethods(array(
-				'get_versions_matching_stability',
-			))
-			->setConstructorArgs(array(
-				$this->cache,
-				$config,
-				new \phpbb\file_downloader(),
-				new \phpbb\user($this->language, '\phpbb\datetime'),
-			))
-			->getMock()
-		;
+		$viglink_helper = $this->get_viglink_helper($config);
 
 		$versions = json_decode(file_get_contents($this->path . 'viglink.json'), true);
 
@@ -128,5 +150,29 @@ class helper_test extends \phpbb_test_case
 		{
 			$this->assertEquals($expected_value, $config[$config_name]);
 		}
+	}
+
+	/**
+	 * Test the log_viglink_error() method
+	 */
+	public function test_log_viglink_error()
+	{
+		$message = 'Test message';
+
+		$config = new \phpbb\config\config(array());
+
+		$this->log->expects($this->any())
+			->method('add')
+			->with(
+				$this->equalTo('critical'),
+				ANONYMOUS,
+				'',
+				$this->equalTo('LOG_VIGLINK_CHECK_FAIL'),
+				false,
+				array($message)
+			);
+
+		$viglink_helper = $this->get_viglink_helper($config);
+		$viglink_helper->log_viglink_error($message);
 	}
 }

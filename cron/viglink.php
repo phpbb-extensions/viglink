@@ -15,49 +15,27 @@ namespace phpbb\viglink\cron;
  */
 class viglink extends \phpbb\cron\task\base
 {
-	/**
-	 * Config object
-	 * @var \phpbb\config\config
-	 */
+	/** @var \phpbb\config\config $config Config object */
 	protected $config;
 
-	/**
-	 * Viglink helper object
-	 * @var \phpbb\viglink\acp\viglink_helper
-	 */
+	/** @var \phpbb\viglink\acp\viglink_helper $helper Viglink helper object */
 	protected $helper;
-
-	/**
-	 * Log object
-	 * @var \phpbb\log\log
-	 */
-	protected $log;
-
-	/**
-	 * User object
-	 * @var \phpbb\user
-	 */
-	protected $user;
 
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config              $config         Config object
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
-	 * @param \phpbb\log\log                    $log            Log object
-	 * @param \phpbb\user                       $user           User object
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper, \phpbb\log\log $log, \phpbb\user $user)
+	public function __construct(\phpbb\config\config $config, \phpbb\viglink\acp\viglink_helper $viglink_helper)
 	{
 		$this->config = $config;
 		$this->helper = $viglink_helper;
-		$this->log = $log;
-		$this->user = $user;
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritDoc}
 	 */
 	public function run()
 	{
@@ -67,15 +45,12 @@ class viglink extends \phpbb\cron\task\base
 		}
 		catch (\RuntimeException $e)
 		{
-			$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
-			$user_ip = empty($this->user->ip) ? '' : $this->user->ip;
-
-			$this->log->add('critical', $user_id, $user_ip, 'LOG_VIGLINK_CHECK_FAIL', false, array($e->getMessage()));
+			$this->helper->log_viglink_error($e->getMessage());
 		}
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritDoc}
 	 */
 	public function is_runnable()
 	{
@@ -83,7 +58,7 @@ class viglink extends \phpbb\cron\task\base
 	}
 
 	/**
-	 * @inheritdoc
+	 * {@inheritDoc}
 	 */
 	public function should_run()
 	{

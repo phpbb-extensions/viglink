@@ -10,27 +10,21 @@
 
 namespace phpbb\viglink\migrations;
 
+/**
+ * Migration to install VigLink cron task data
+ */
 class viglink_cron extends \phpbb\db\migration\migration
 {
-	/**
-	 * @inheritdoc
-	 */
 	static public function depends_on()
 	{
 		return array('phpbb\viglink\migrations\viglink_data');
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public function effectively_installed()
 	{
 		return isset($this->config['viglink_last_gc']);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public function update_data()
 	{
 		return array(

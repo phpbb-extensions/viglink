@@ -1,35 +1,34 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
-* Event listener
-*/
+ * Event listener
+ */
 class listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\config\config */
+	/** @var \phpbb\config\config $config Config object */
 	protected $config;
 
-	/** @var \phpbb\template\template */
+	/** @var \phpbb\template\template $template Template object */
 	protected $template;
 
 	/**
-	* Constructor
-	*
-	* @param \phpbb\config\config        $config             Config object
-	* @param \phpbb\template\template    $template           Template object
-	* @access public
-	*/
+	 * Constructor
+	 *
+	 * @param \phpbb\config\config     $config   Config object
+	 * @param \phpbb\template\template $template Template object
+	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template)
 	{
 		$this->config = $config;
@@ -37,11 +36,7 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Assign functions defined in this class to event listeners in the core
-	*
-	* @return array
-	* @static
-	* @access public
+	* {@inheritDoc}
 	*/
 	static public function getSubscribedEvents()
 	{
@@ -51,11 +46,10 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Display VigLink js code
-	*
-	* @return null
-	* @access public
-	*/
+	 * Insert the VigLink JS code into forum pages
+	 *
+	 * @return void
+	 */
 	public function display_viglink()
 	{
 		$viglink_key = '';

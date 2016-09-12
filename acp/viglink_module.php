@@ -1,28 +1,43 @@
 <?php
 /**
-*
-* VigLink extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * VigLink extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace phpbb\viglink\acp;
 
+/**
+ * VigLink ACP module
+ */
 class viglink_module
 {
-	/** @var string */
+	/** @var string $u_action Custom form action */
 	public $u_action;
 
 	public function main($id, $mode)
 	{
-		global $config, $request,  $template, $user;
+		global $phpbb_container;
 
-		$user->add_lang_ext('phpbb/viglink', 'viglink_module_acp');
+		/** @var \phpbb\config\config $config Config object */
+		$config = $phpbb_container->get('config');
+
+		/** @var \phpbb\language\language $language Language object */
+		$language = $phpbb_container->get('language');
+
+		/** @var \phpbb\request\request $request Request object */
+		$request  = $phpbb_container->get('request');
+
+		/** @var \phpbb\template\template $template Template object */
+		$template = $phpbb_container->get('template');
+
+		$language->add_lang('viglink_module_acp', 'phpbb/viglink');
 
 		$this->tpl_name = 'acp_viglink';
-		$this->page_title = $user->lang('ACP_VIGLINK_SETTINGS');
+		$this->page_title = $language->lang('ACP_VIGLINK_SETTINGS');
 
 		$submit = $request->is_set_post('submit');
 
@@ -45,7 +60,7 @@ class viglink_module
 		// Error if the form is invalid
 		if ($submit && !check_form_key($form_key))
 		{
-			$error[] = $user->lang('FORM_INVALID');
+			$error[] = $language->lang('FORM_INVALID');
 		}
 
 		// Do not process form if invalid
@@ -63,7 +78,7 @@ class viglink_module
 			// Error if the input is not a valid VigLink API Key
 			if ($cfg_array['viglink_api_key'] != '' && !preg_match('/^[A-Za-z0-9]{32}$/', $cfg_array['viglink_api_key']))
 			{
-				$error[] = $user->lang('ACP_VIGLINK_API_KEY_INVALID', $cfg_array['viglink_api_key']);
+				$error[] = $language->lang('ACP_VIGLINK_API_KEY_INVALID', $cfg_array['viglink_api_key']);
 			}
 
 			// If no errors, set the config values
@@ -74,18 +89,18 @@ class viglink_module
 					$config->set($cfg, $value);
 				}
 
-				trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
+				trigger_error($language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 			}
 		}
 
 		// Set a general error message if VigLink has been disabled by phpBB
 		if (!$config['allow_viglink_global'])
 		{
-			$error[] = $user->lang('ACP_VIGLINK_DISABLED_GLOBAL');
+			$error[] = $language->lang('ACP_VIGLINK_DISABLED_GLOBAL');
 		}
 		else if (!$config['allow_viglink_phpbb'] && !$cfg_array['viglink_api_key'])
 		{
-			$error[] = $user->lang('ACP_VIGLINK_DISABLED_PHPBB');
+			$error[] = $language->lang('ACP_VIGLINK_DISABLED_PHPBB');
 		}
 
 		$template->assign_vars(array(

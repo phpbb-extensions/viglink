@@ -10,38 +10,21 @@
 
 namespace phpbb\viglink\migrations;
 
+/**
+ * Migration to install VigLink data
+ */
 class viglink_data extends \phpbb\db\migration\migration
 {
-	/**
-	* Assign migration file dependencies for this migration
-	*
-	* @return array Array of migration files
-	* @static
-	* @access public
-	*/
 	static public function depends_on()
 	{
 		return array('\phpbb\db\migration\data\v31x\v312');
 	}
 
-	/**
-	* Skip this migration if VigLink data already exists
-	*
-	* @return bool True if data exists, false otherwise
-	* @access public
-	*/
 	public function effectively_installed()
 	{
 		return isset($this->config['viglink_api_key']);
 	}
 
-	/**
-	* Add VigLink API Key config to the database.
-	*
-	* @todo Add phpBB API key value
-	* @return array Array of table data
-	* @access public
-	*/
 	public function update_data()
 	{
 		return array(

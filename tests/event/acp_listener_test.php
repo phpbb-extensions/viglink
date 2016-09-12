@@ -24,6 +24,9 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\language\language */
 	protected $language;
 
+	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
+	protected $log;
+
 	/** @var \phpbb\request\request */
 	protected $request;
 
@@ -49,6 +52,10 @@ class acp_listener_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->getMock();
 
+		$this->log = $this->getMockBuilder('\phpbb\log\log')
+			->disableOriginalConstructor()
+			->getMock();
+
 		$this->helper = $this
 			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->setMethods(array(
@@ -58,6 +65,7 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
+				$this->log,
 				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
@@ -162,6 +170,7 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
+				$this->log,
 				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))
 			->getMock()
