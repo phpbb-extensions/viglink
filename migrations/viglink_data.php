@@ -35,7 +35,7 @@ class viglink_data extends \phpbb\db\migration\migration
 			// Special config options for phpBB use
 			array('config.add', array('allow_viglink_phpbb', 1)),
 			array('config.add', array('allow_viglink_global', 1)),
-			array('config.add', array('phpbb_viglink_api_key', '')),
+			array('config.add', array('phpbb_viglink_api_key', 'e4fd14f5d7f2bb6d80b8f8da1354718c')),
 
 			// Add the ACP module to Board Configuration
 			array('module.add', array(
