@@ -115,7 +115,7 @@ class viglink_module
 			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
 			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
 
-			'U_VIGLINK_CONVERT'		=> 'https://www.phpbb.com/viglink/convert.php?subId=' .  md5($config['questionnaire_unique_id']) . '&amp;key=' . $config['phpbb_viglink_api_key'],
+			'U_VIGLINK_CONVERT'		=> 'https://www.phpbb.com/viglink/convert.php?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']) . '&amp;key=' . $config['phpbb_viglink_api_key'],
 			'U_ACTION'				=> $this->u_action,
 		));
 	}

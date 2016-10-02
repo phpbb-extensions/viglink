@@ -68,6 +68,7 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'VIGLINK_ENABLED'	=> $this->config['viglink_enabled'] && $viglink_key,
 			'VIGLINK_API_KEY'	=> $viglink_key,
+			'VIGLINK_SUB_ID'	=> md5($this->config['questionnaire_unique_id'] . $this->config['sitename']),
 		));
 	}
 }
