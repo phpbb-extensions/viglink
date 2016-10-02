@@ -29,7 +29,11 @@ class listener_test extends \phpbb_test_case
 		parent::setUp();
 
 		// Load/Mock classes required by the event listener class
-		$this->config = new \phpbb\config\config(array('viglink_enabled' => 1));
+		$this->config = new \phpbb\config\config(array(
+			'viglink_enabled' => 1,
+			'questionnaire_unique_id' => 'foobar',
+			'sitename' => 'yourdomain.com',
+		));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 	}
@@ -140,6 +144,7 @@ class listener_test extends \phpbb_test_case
 			->with(array(
 				'VIGLINK_ENABLED'	=> $expected['viglink_enabled'],
 				'VIGLINK_API_KEY'	=> $expected['viglink_api_key'],
+				'VIGLINK_SUB_ID'	=> '77950694654327856e6871014d69ad35',
 			));
 
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
