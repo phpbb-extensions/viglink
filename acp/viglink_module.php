@@ -108,6 +108,15 @@ class viglink_module
 			$error[] = $language->lang('ACP_VIGLINK_DISABLED_PHPBB');
 		}
 
+		// Try to get convert account key from .com
+		$convert_account_link = '';
+		$signature = @file_get_contents('http://www.phpbb.com/viglink/convert?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']) . '&amp;key=' . $config['phpbb_viglink_api_key']);
+		if (!empty($signature))
+		{
+			$convert_account_link .= 'https://www.viglink.com/users/convertAccount?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']);
+			$convert_account_link .= $signature;
+		}
+
 		$template->assign_vars(array(
 			'S_ERROR'				=> (bool) sizeof($error),
 			'ERROR_MSG'				=> implode('<br />', $error),
@@ -115,7 +124,7 @@ class viglink_module
 			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
 			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
 
-			'U_VIGLINK_CONVERT'		=> 'https://www.phpbb.com/viglink/convert.php?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']) . '&amp;key=' . $config['phpbb_viglink_api_key'],
+			'U_VIGLINK_CONVERT'		=> $convert_account_link,
 			'U_ACTION'				=> $this->u_action,
 		));
 	}
