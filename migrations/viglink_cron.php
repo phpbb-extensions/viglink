@@ -17,7 +17,7 @@ class viglink_cron extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return array('phpbb\viglink\migrations\viglink_data');
+		return array('\phpbb\viglink\migrations\viglink_data');
 	}
 
 	public function effectively_installed()
