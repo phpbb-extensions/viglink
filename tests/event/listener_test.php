@@ -136,6 +136,8 @@ class listener_test extends \phpbb_test_case
 
 		$this->config['allow_viglink_global'] = $allow_viglink_global;
 		$this->config['allow_viglink_phpbb'] = $allow_viglink_phpbb;
+		$this->config['questionnaire_unique_id'] = random_bytes(16);
+		$this->config['sitename'] = 'foobar.com';
 
 		$this->set_listener();
 
@@ -144,7 +146,7 @@ class listener_test extends \phpbb_test_case
 			->with(array(
 				'VIGLINK_ENABLED'	=> $expected['viglink_enabled'],
 				'VIGLINK_API_KEY'	=> $expected['viglink_api_key'],
-				'VIGLINK_SUB_ID'	=> '77950694654327856e6871014d69ad35',
+				'VIGLINK_SUB_ID'	=> md5($this->config['sitename'] . $this->config['questionnaire_unique_id']),
 			));
 
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();

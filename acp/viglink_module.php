@@ -109,12 +109,10 @@ class viglink_module
 		}
 
 		// Try to get convert account key from .com
-		$convert_account_link = '';
-		$signature = @file_get_contents('http://www.phpbb.com/viglink/convert?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']) . '&amp;key=' . $config['phpbb_viglink_api_key']);
-		if (!empty($signature))
+		$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?sitename=' .  $config['sitename'] . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
+		if (empty($convert_account_link) || strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') !== 0)
 		{
-			$convert_account_link .= 'https://www.viglink.com/users/convertAccount?subId=' .  md5($config['questionnaire_unique_id'] . $config['sitename']);
-			$convert_account_link .= $signature;
+			$convert_account_link = '';
 		}
 
 		$template->assign_vars(array(
