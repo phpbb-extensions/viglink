@@ -9,6 +9,7 @@
  */
 
 namespace phpbb\viglink\acp;
+
 use phpbb\request\type_cast_helper;
 
 /**
