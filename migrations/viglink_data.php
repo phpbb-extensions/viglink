@@ -36,6 +36,7 @@ class viglink_data extends \phpbb\db\migration\migration
 			array('config.add', array('allow_viglink_phpbb', 1)),
 			array('config.add', array('allow_viglink_global', 1)),
 			array('config.add', array('phpbb_viglink_api_key', 'e4fd14f5d7f2bb6d80b8f8da1354718c')),
+			array('config.add', array('viglink_convert_account_url', '')),
 
 			// Add the ACP module to Board Configuration
 			array('module.add', array(

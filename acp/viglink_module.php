@@ -9,6 +9,7 @@
  */
 
 namespace phpbb\viglink\acp;
+use phpbb\request\type_cast_helper;
 
 /**
  * VigLink ACP module
@@ -109,10 +110,23 @@ class viglink_module
 		}
 
 		// Try to get convert account key from .com
-		$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?sitename=' .  $config['sitename'] . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
-		if (empty($convert_account_link) || strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') !== 0)
+		$sub_id = md5(urlencode($config['sitename']) . $config['questionnaire_unique_id']);
+		$convert_account_link = !empty($config['viglink_convert_account_url']) ? $config['viglink_convert_account_url'] : '';
+
+		if (empty($convert_account_link) || strpos($config['viglink_convert_account_url'], 'subId=' . $sub_id) === false)
 		{
-			$convert_account_link = '';
+			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?sitename=' .  urlencode($config['sitename']) . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
+			if (!empty($convert_account_link) && strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') === 0)
+			{
+				$type_caster = new type_cast_helper();
+				$type_caster->set_var($convert_account_link, $convert_account_link, 'string', false, false);
+				$config->set('viglink_convert_account_url', $convert_account_link);
+			}
+			else
+			{
+				$error[] = $language->lang('ACP_VIGLINK_NO_CONVERT_LINK');
+				$convert_account_link = '';
+			}
 		}
 
 		$template->assign_vars(array(

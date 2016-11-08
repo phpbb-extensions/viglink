@@ -54,4 +54,5 @@ $lang = array_merge($lang, array(
 	'ACP_VIGLINK_CLAIM'				=> 'Claim your earnings',
 	'ACP_VIGLINK_CLAIM_EXPLAIN'		=> 'You can claim your forum\'s earnings from VigLink monetized links, instead of allowing the earnings to go to the phpBB project. To manage your account settings, sign up for a “VigLink Convert” account by clicking on “Convert account”',
 	'ACP_VIGLINK_CONVERT_ACCOUNT'	=> 'Convert account',
+	'ACP_VIGLINK_NO_CONVERT_LINK'	=> 'VigLink convert account link could not be retrieved.'
 ));
