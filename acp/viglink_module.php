@@ -10,6 +10,8 @@
 
 namespace phpbb\viglink\acp;
 
+use phpbb\request\type_cast_helper;
+
 /**
  * VigLink ACP module
  */
@@ -93,6 +95,11 @@ class viglink_module
 			}
 		}
 
+		if (!isset($config['questionnaire_unique_id']))
+		{
+			$config->set('questionnaire_unique_id', unique_id());
+		}
+
 		// Set a general error message if VigLink has been disabled by phpBB
 		if (!$config['allow_viglink_global'])
 		{
@@ -103,14 +110,35 @@ class viglink_module
 			$error[] = $language->lang('ACP_VIGLINK_DISABLED_PHPBB');
 		}
 
+		// Try to get convert account key from .com
+		$sub_id = md5(urlencode($config['sitename']) . $config['questionnaire_unique_id']);
+		$convert_account_link = $config->offsetGet('viglink_convert_account_url');
+
+		if (empty($convert_account_link) || strpos($config['viglink_convert_account_url'], 'subId=' . $sub_id) === false)
+		{
+			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?sitename=' . urlencode($config['sitename']) . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
+			if (!empty($convert_account_link) && strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') === 0)
+			{
+				$type_caster = new type_cast_helper();
+				$type_caster->set_var($convert_account_link, $convert_account_link, 'string', false, false);
+				$config->set('viglink_convert_account_url', $convert_account_link);
+			}
+			else
+			{
+				$error[] = $language->lang('ACP_VIGLINK_NO_CONVERT_LINK');
+				$convert_account_link = '';
+			}
+		}
+
 		$template->assign_vars(array(
-			'S_ERROR'			=> (bool) sizeof($error),
-			'ERROR_MSG'			=> implode('<br />', $error),
+			'S_ERROR'				=> (bool) sizeof($error),
+			'ERROR_MSG'				=> implode('<br />', $error),
 
-			'VIGLINK_ENABLED'	=> $cfg_array['viglink_enabled'],
-			'VIGLINK_API_KEY'	=> $cfg_array['viglink_api_key'],
+			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
+			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
 
-			'U_ACTION'			=> $this->u_action,
+			'U_VIGLINK_CONVERT'		=> $convert_account_link,
+			'U_ACTION'				=> $this->u_action,
 		));
 	}
 }

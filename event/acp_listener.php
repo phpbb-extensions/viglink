@@ -99,7 +99,7 @@ class acp_listener implements EventSubscriberInterface
 		}
 
 		$this->template->assign_vars(array(
-			'S_ENABLE_VIGLINK'		=> !empty($this->config['viglink_enabled']),
+			'S_ENABLE_VIGLINK'		=> !empty($this->config['viglink_enabled']) || !$this->config['help_send_statistics_time'],
 		));
 	}
 }
