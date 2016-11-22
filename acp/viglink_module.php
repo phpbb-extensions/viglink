@@ -116,7 +116,7 @@ class viglink_module
 
 		if (empty($convert_account_link) || strpos($config['viglink_convert_account_url'], 'subId=' . $sub_id) === false)
 		{
-			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?sitename=' . $config['viglink_api_servername'] . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
+			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?domain=' . $config['server_name'] . '&amp;sitename=' . $config['viglink_api_servername'] . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
 			if (!empty($convert_account_link) && strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') === 0)
 			{
 				$type_caster = new type_cast_helper();
