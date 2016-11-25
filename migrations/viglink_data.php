@@ -29,7 +29,7 @@ class viglink_data extends \phpbb\db\migration\migration
 	{
 		return array(
 			// Basic config options
-			array('config.add', array('viglink_enabled', 0)),
+			array('config.add', array('viglink_enabled', 1)),
 			array('config.add', array('viglink_api_key', '')),
 
 			// Special config options for phpBB use
@@ -37,6 +37,7 @@ class viglink_data extends \phpbb\db\migration\migration
 			array('config.add', array('allow_viglink_global', 1)),
 			array('config.add', array('phpbb_viglink_api_key', 'e4fd14f5d7f2bb6d80b8f8da1354718c')),
 			array('config.add', array('viglink_convert_account_url', '')),
+			array('config.add', array('viglink_api_siteid', md5($this->config['server_name']))),
 
 			// Add the ACP module to Board Configuration
 			array('module.add', array(
