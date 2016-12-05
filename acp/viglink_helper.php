@@ -73,7 +73,7 @@ class viglink_helper extends \phpbb\version_helper
 			}
 			else
 			{
-				$info = 1;
+				$info = '1';
 				$this->set_viglink_configs(array(
 					'allow_viglink_phpbb'	=> true,
 				));
