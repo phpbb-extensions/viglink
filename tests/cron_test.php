@@ -21,20 +21,39 @@ class cron_test extends \phpbb_test_case
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
 	protected $viglink_helper;
 
+	/** @var \phpbb\file_downloader */
+	protected $file_downloader;
+
 	/** @var \phpbb\language\language */
 	protected $language;
 
 	public function setUp()
 	{
+		global $phpbb_root_path;
+
 		parent::setUp();
 
 		$this->config = new \phpbb\config\config(array('viglink_last_gc' => 0, 'viglink_enabled' => 1));
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->viglink_helper = $this->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
+		$this->db = $this->getMockBuilder('\phpbb\db\driver\mysqli')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->file_downloader = $this->getMock('\phpbb\file_downloader', array('get'), array());
+		$this->file_downloader->expects($this->any())
+			->method('get')
+			->will($this->returnValue('1'));
+		$this->log = $this->getMockBuilder('\phpbb\log\log')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->user = $this->getMockBuilder('\phpbb\user')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->cache = new \phpbb\cache\service(new \phpbb\cache\driver\dummy(), $this->config, $this->db, $phpbb_root_path, '.php');
+		$this->viglink_helper = $this->getMock('\phpbb\viglink\acp\viglink_helper',
+			array('set_viglink_services'), array($this->cache, $this->config, $this->file_downloader, $this->log, $this->user));
 
 		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper);
 	}
@@ -101,5 +120,42 @@ class cron_test extends \phpbb_test_case
 	public function test_is_runnable()
 	{
 		$this->assertTrue($this->cron_task->is_runnable());
+	}
+
+	private function get_viglink_helper()
+	{
+		$viglink_helper = new \phpbb\viglink\acp\viglink_helper(
+			$this->cache,
+			$this->config,
+			$this->file_downloader,
+			$this->log,
+			$this->user
+		);
+
+		return $viglink_helper;
+	}
+
+	public function test_disable_viglink()
+	{
+		$viglink_helper = $this->get_viglink_helper();
+		$this->assertEquals('', $this->config['allow_viglink_phpbb']);
+		$viglink_helper->set_viglink_services(true);
+		$this->assertEquals(1, $this->config['allow_viglink_phpbb']);
+
+		// Change method to return false
+		$this->file_downloader = $this->getMock('\phpbb\file_downloader', array('get'), array());
+		$this->file_downloader->expects($this->any())
+			->method('get')
+			->will($this->returnValue('0'));
+
+		$viglink_helper = $this->get_viglink_helper();
+		$viglink_helper->set_viglink_services(true);
+		$this->assertEquals(0, $this->config['allow_viglink_phpbb']);
+
+		// Reset to previous setting
+		$this->file_downloader = $this->getMock('\phpbb\file_downloader', array('get'), array());
+		$this->file_downloader->expects($this->any())
+			->method('get')
+			->will($this->returnValue('1'));
 	}
 }

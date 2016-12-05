@@ -45,9 +45,9 @@ class viglink_helper extends \phpbb\version_helper
 	 */
 	public function set_viglink_services($force_update = false, $force_cache = false)
 	{
-		$cache_file = '_versioncheck_viglink_' . $this->use_ssl;
+		$cache_key = '_versioncheck_viglink_' . $this->use_ssl;
 
-		$info = $this->cache->get($cache_file);
+		$info = $this->cache->get($cache_key);
 
 		if ($info === false && $force_cache)
 		{
@@ -64,14 +64,8 @@ class viglink_helper extends \phpbb\version_helper
 				$prepare_parameters = array_merge(array($exception->getMessage()), $exception->get_parameters());
 				throw new \RuntimeException(call_user_func_array(array($this->user, 'lang'), $prepare_parameters));
 			}
-			$error_string = $this->file_downloader->get_error_string();
 
-			if (!empty($error_string))
-			{
-				throw new \RuntimeException($error_string);
-			}
-
-			if ($info === 0)
+			if ($info === '0')
 			{
 				$this->set_viglink_configs(array(
 					'allow_viglink_phpbb'	=> false,
@@ -80,9 +74,12 @@ class viglink_helper extends \phpbb\version_helper
 			else
 			{
 				$info = 1;
+				$this->set_viglink_configs(array(
+					'allow_viglink_phpbb'	=> true,
+				));
 			}
 
-			$this->cache->put($cache_file, $info, 86400); // 24 hours
+			$this->cache->put($cache_key, $info, 86400); // 24 hours
 		}
 	}
 
