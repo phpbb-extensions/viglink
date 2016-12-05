@@ -56,7 +56,6 @@ class viglink_module
 		// Get stored config/default values
 		$cfg_array = array(
 			'viglink_enabled' => isset($config['viglink_enabled']) ? $config['viglink_enabled'] : 0,
-			'viglink_api_key' => isset($config['viglink_api_key']) ? $config['viglink_api_key'] : '',
 		);
 
 		// Error if the form is invalid
@@ -75,13 +74,6 @@ class viglink_module
 		{
 			// Get the VigLink form field values
 			$cfg_array['viglink_enabled'] = $request->variable('viglink_enabled', 0);
-			$cfg_array['viglink_api_key'] = $request->variable('viglink_api_key', '');
-
-			// Error if the input is not a valid VigLink API Key
-			if ($cfg_array['viglink_api_key'] != '' && !preg_match('/^[A-Za-z0-9]{32}$/', $cfg_array['viglink_api_key']))
-			{
-				$error[] = $language->lang('ACP_VIGLINK_API_KEY_INVALID', $cfg_array['viglink_api_key']);
-			}
 
 			// If no errors, set the config values
 			if (!sizeof($error))
@@ -101,11 +93,7 @@ class viglink_module
 		}
 
 		// Set a general error message if VigLink has been disabled by phpBB
-		if (!$config['allow_viglink_global'])
-		{
-			$error[] = $language->lang('ACP_VIGLINK_DISABLED_GLOBAL');
-		}
-		else if (!$config['allow_viglink_phpbb'] && !$cfg_array['viglink_api_key'])
+		if (!$config['allow_viglink_phpbb'])
 		{
 			$error[] = $language->lang('ACP_VIGLINK_DISABLED_PHPBB');
 		}
@@ -116,7 +104,7 @@ class viglink_module
 
 		if (empty($convert_account_link) || strpos($config['viglink_convert_account_url'], 'subId=' . $sub_id) === false)
 		{
-			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?domain=' . urlencode($config['server_name']) . '&amp;siteid=' . $config['viglink_api_siteid'] . '&amp;uuid=' . $config['questionnaire_unique_id'] . '&amp;key=' . $config['phpbb_viglink_api_key']);
+			$convert_account_link = @file_get_contents('https://www.phpbb.com/viglink/convert?domain=' . urlencode($config['server_name']) . '&siteid=' . $config['viglink_api_siteid'] . '&uuid=' . $config['questionnaire_unique_id'] . '&key=' . $config['phpbb_viglink_api_key']);
 			if (!empty($convert_account_link) && strpos($convert_account_link, 'https://www.viglink.com/users/convertAccount') === 0)
 			{
 				$type_caster = new type_cast_helper();
@@ -135,7 +123,6 @@ class viglink_module
 			'ERROR_MSG'				=> implode('<br />', $error),
 
 			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],
-			'VIGLINK_API_KEY'		=> $cfg_array['viglink_api_key'],
 
 			'U_VIGLINK_CONVERT'		=> $convert_account_link,
 			'U_ACTION'				=> $this->u_action,

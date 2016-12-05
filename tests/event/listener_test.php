@@ -71,30 +71,8 @@ class listener_test extends \phpbb_test_case
 	public function display_viglink_data()
 	{
 		return array(
-			array( // User has a key, use their own key
-				true, // allow people to use their own key
-				true, // allow people to use phpBB's key
-				'user_key_1234567890',
-				'phpbb_key_1234567890',
-				array(
-					'viglink_enabled' => true,
-					'viglink_api_key' => 'user_key_1234567890',
-				)
-			),
 			array( // User has no key, use phpBB's key
-				true, // allow people to use their own key
 				true, // allow people to use phpBB's key
-				'',
-				'phpbb_key_1234567890',
-				array(
-					'viglink_enabled' => true,
-					'viglink_api_key' => 'phpbb_key_1234567890',
-				)
-			),
-			array( // User has a key, but is disallowed, use phpBB's key
-				false, // disallow people using their own keys
-				true, // allow people to use phpBB's key
-				'user_key_1234567890',
 				'phpbb_key_1234567890',
 				array(
 					'viglink_enabled' => true,
@@ -102,9 +80,7 @@ class listener_test extends \phpbb_test_case
 				)
 			),
 			array( // User has a key, all are disallowed, disable viglink
-				false, // disallow people using their own keys
 				false, // disallow people using phpBB's key
-				'user_key_1234567890',
 				'phpbb_key_1234567890',
 				array(
 					'viglink_enabled' => false,
@@ -112,9 +88,7 @@ class listener_test extends \phpbb_test_case
 				)
 			),
 			array( // User has a key, but is disallowed, phpBB key missing, disable viglink
-				false, // disallow people using their own keys
 				true, // allow people to use phpBB's key
-				'user_key_1234567890',
 				'',
 				array(
 					'viglink_enabled' => false,
@@ -129,12 +103,10 @@ class listener_test extends \phpbb_test_case
 	 *
 	 * @dataProvider display_viglink_data
 	 */
-	public function test_display_viglink($allow_viglink_global, $allow_viglink_phpbb, $user_api_key, $phpbb_api_key, $expected)
+	public function test_display_viglink($allow_viglink_phpbb, $phpbb_api_key, $expected)
 	{
-		$this->config['viglink_api_key'] = $user_api_key;
 		$this->config['phpbb_viglink_api_key'] = $phpbb_api_key;
 
-		$this->config['allow_viglink_global'] = $allow_viglink_global;
 		$this->config['allow_viglink_phpbb'] = $allow_viglink_phpbb;
 		$this->config['questionnaire_unique_id'] = random_bytes(16);
 		$this->config['viglink_api_siteid'] = md5('foobar.com');

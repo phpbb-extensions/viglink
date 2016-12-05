@@ -22,7 +22,7 @@ class viglink_data extends \phpbb\db\migration\migration
 
 	public function effectively_installed()
 	{
-		return isset($this->config['viglink_api_key']);
+		return isset($this->config['phpbb_viglink_api_key']);
 	}
 
 	public function update_data()

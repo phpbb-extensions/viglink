@@ -46,8 +46,6 @@ $lang = array_merge($lang, array(
 	'ACP_VIGLINK_ENABLE_EXPLAIN'	=> 'Enables use of VigLink services.',
 	'ACP_VIGLINK_EARNINGS'			=> 'Claim your own earnings (optional)',
 	'ACP_VIGLINK_EARNINGS_EXPLAIN'  => 'You can claim your own earnings by signing up for a VigLink account.',
-	'ACP_VIGLINK_API_KEY'			=> 'VigLink API key',
-	'ACP_VIGLINK_API_KEY_EXPLAIN'	=> 'You can set up your own VigLink Convert account and start earning a commission on monetized links, using your own personal VigLink API key. To obtain a key, sign up for an account at <a href="http://www.viglink.com">VigLink.com</a>.',
 	'ACP_VIGLINK_API_KEY_INVALID'	=> '“%s” is not a valid VigLink Convert API key.',
 	'ACP_VIGLINK_DISABLED_GLOBAL'	=> 'VigLink services have been disabled by phpBB.',
 	'ACP_VIGLINK_DISABLED_PHPBB'	=> 'VigLink services have been disabled by phpBB. You may still use VigLink to earn revenue using your own API key.',

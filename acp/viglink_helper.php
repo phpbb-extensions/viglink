@@ -57,7 +57,7 @@ class viglink_helper extends \phpbb\version_helper
 		{
 			try
 			{
-				$info = $this->file_downloader->get($this->host, $this->path, $this->file, $this->use_ssl ? 443 : 80);
+				$info = $this->file_downloader->get('www.phpbb.com', '/viglink', 'enabled', 443);
 			}
 			catch (\phpbb\exception\runtime_exception $exception)
 			{
@@ -75,7 +75,6 @@ class viglink_helper extends \phpbb\version_helper
 			{
 				$this->set_viglink_configs(array(
 					'allow_viglink_phpbb'	=> false,
-					'allow_viglink_global'	=> false,
 				));
 			}
 			else
@@ -98,7 +97,6 @@ class viglink_helper extends \phpbb\version_helper
 	{
 		$viglink_configs = array(
 			'allow_viglink_phpbb',
-			'allow_viglink_global',
 			'phpbb_viglink_api_key',
 		);
 
