@@ -45,17 +45,42 @@ class viglink_helper extends \phpbb\version_helper
 	 */
 	public function set_viglink_services($force_update = false, $force_cache = false)
 	{
-		$versions = $this->get_versions_matching_stability($force_update, $force_cache);
+		$cache_key = '_versioncheck_viglink_' . $this->use_ssl;
 
-		$self = $this;
-		$current_version = $this->current_version;
+		$info = $this->cache->get($cache_key);
 
-		// Filter out any versions less than to the current version
-		$versions = array_filter($versions, function($data) use ($self, $current_version) {
-			return $self->compare($data['current'], $current_version, '>=');
-		});
+		if ($info === false && $force_cache)
+		{
+			throw new \RuntimeException($this->user->lang('VERSIONCHECK_FAIL'));
+		}
+		else if ($info === false || $force_update)
+		{
+			try
+			{
+				$info = $this->file_downloader->get('www.phpbb.com', '/viglink', 'enabled', 443);
+			}
+			catch (\phpbb\exception\runtime_exception $exception)
+			{
+				$prepare_parameters = array_merge(array($exception->getMessage()), $exception->get_parameters());
+				throw new \RuntimeException(call_user_func_array(array($this->user, 'lang'), $prepare_parameters));
+			}
 
-		array_map(array($this, 'set_viglink_configs'), $versions);
+			if ($info === '0')
+			{
+				$this->set_viglink_configs(array(
+					'allow_viglink_phpbb'	=> false,
+				));
+			}
+			else
+			{
+				$info = '1';
+				$this->set_viglink_configs(array(
+					'allow_viglink_phpbb'	=> true,
+				));
+			}
+
+			$this->cache->put($cache_key, $info, 86400); // 24 hours
+		}
 	}
 
 	/**
@@ -69,7 +94,6 @@ class viglink_helper extends \phpbb\version_helper
 	{
 		$viglink_configs = array(
 			'allow_viglink_phpbb',
-			'allow_viglink_global',
 			'phpbb_viglink_api_key',
 		);
 

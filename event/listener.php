@@ -54,12 +54,7 @@ class listener implements EventSubscriberInterface
 	{
 		$viglink_key = '';
 
-		if ($this->config['allow_viglink_global'] && $this->config['viglink_api_key'])
-		{
-			// Use custom API key if set and if VigLink is allowed for all
-			$viglink_key = $this->config['viglink_api_key'];
-		}
-		else if ($this->config['allow_viglink_phpbb'] && $this->config['phpbb_viglink_api_key'])
+		if ($this->config['allow_viglink_phpbb'] && $this->config['phpbb_viglink_api_key'])
 		{
 			// Use phpBB API key if VigLink is allowed for phpBB
 			$viglink_key = $this->config['phpbb_viglink_api_key'];

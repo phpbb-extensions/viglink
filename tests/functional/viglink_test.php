@@ -46,7 +46,6 @@ class viglink_test extends \phpbb_functional_test_case
 		// Set VigLink form values
 		$form = $crawler->selectButton($this->lang('SUBMIT'))->form();
 		$values = $form->getValues();
-		$values['viglink_api_key'] = $this->sample_viglink_key;
 		$values['viglink_enabled'] = true;
 		$form->setValues($values);
 
@@ -60,12 +59,20 @@ class viglink_test extends \phpbb_functional_test_case
 	*/
 	public function test_viglink_code()
 	{
+		$db = $this->get_db();
+		$sql = 'SELECT config_value AS api_key
+			FROM ' . CONFIG_TABLE . "
+			WHERE config_name = 'phpbb_viglink_api_key'";
+		$result = $db->sql_query($sql);
+		$api_key = $db->sql_fetchfield('api_key');
+		$db->sql_freeresult($result);
+
 		// Assert VigLink appears on viewtopic pages
 		$crawler = self::request('GET', 'viewtopic.php?f=2&t=1');
-		$this->assertContains($this->sample_viglink_key, $crawler->text());
+		$this->assertContains($api_key, $crawler->text());
 
 		// Assert VigLink does not appear on other pages
 		$crawler = self::request('GET', 'index.php');
-		$this->assertNotContains($this->sample_viglink_key, $crawler->text());
+		$this->assertNotContains($api_key, $crawler->text());
 	}
 }
