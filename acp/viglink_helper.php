@@ -20,6 +20,9 @@ class viglink_helper extends \phpbb\version_helper
 	/** @var \phpbb\log\log $log */
 	protected $log;
 
+	/** @var \phpbb\user $user */
+	protected $user;
+
 	/**
 	 * Constructor
 	 *
@@ -32,9 +35,10 @@ class viglink_helper extends \phpbb\version_helper
 	 */
 	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\language\language $language, \phpbb\log\log $log, \phpbb\user $user)
 	{
-		parent::__construct($cache, $config, $file_downloader, $user);
+		parent::__construct($cache, $config, $file_downloader);
 		$this->language = $language;
 		$this->log = $log;
+		$this->user = $user;
 	}
 
 	/**
