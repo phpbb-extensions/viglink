@@ -15,6 +15,7 @@ namespace phpbb\viglink\acp;
  */
 class viglink_helper extends \phpbb\version_helper
 {
+	/** @var \phpbb\language\language $language */
 	protected $language;
 
 	/** @var \phpbb\log\log $log */
