@@ -65,6 +65,7 @@ class acp_listener_test extends \phpbb_test_case
 				$this->cache,
 				$this->config,
 				new \phpbb\file_downloader(),
+				$this->language,
 				$this->log,
 				new \phpbb\user($this->language, '\phpbb\datetime'),
 			))

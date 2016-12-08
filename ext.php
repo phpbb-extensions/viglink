@@ -52,13 +52,16 @@ class ext extends \phpbb\extension\base
 			/** @var \phpbb\file_downloader $file_downloader File downloader object*/
 			$file_downloader = $this->container->get('file_downloader');
 
+			/** @var \phpbb\language\language $language */
+			$language = $this->container->get('language');
+
 			/** @var \phpbb\log\log $log */
 			$log = $this->container->get('log');
 
 			/** @var \phpbb\user $user user object */
 			$user = $this->container->get('user');
 
-			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $log, $user);
+			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $language, $log, $user);
 
 			try
 			{

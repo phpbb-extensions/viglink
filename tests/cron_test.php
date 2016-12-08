@@ -53,7 +53,8 @@ class cron_test extends \phpbb_test_case
 
 		$this->cache = new \phpbb\cache\service(new \phpbb\cache\driver\dummy(), $this->config, $this->db, $phpbb_root_path, '.php');
 		$this->viglink_helper = $this->getMock('\phpbb\viglink\acp\viglink_helper',
-			array('set_viglink_services'), array($this->cache, $this->config, $this->file_downloader, $this->log, $this->user));
+			array('set_viglink_services', 'log_viglink_error'),
+			array($this->cache, $this->config, $this->file_downloader, $this->language, $this->log, $this->user));
 
 		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper);
 	}
@@ -128,6 +129,7 @@ class cron_test extends \phpbb_test_case
 			$this->cache,
 			$this->config,
 			$this->file_downloader,
+			$this->language,
 			$this->log,
 			$this->user
 		);

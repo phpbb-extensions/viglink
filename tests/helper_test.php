@@ -54,23 +54,14 @@ class helper_test extends \phpbb_test_case
 	 */
 	public function get_viglink_helper($config)
 	{
-		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
-		$viglink_helper = $this
-			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
-			->setMethods(array(
-				'get_versions_matching_stability',
-			))
-			->setConstructorArgs(array(
-				$this->cache,
-				$config,
-				new \phpbb\file_downloader(),
-				$this->log,
-				new \phpbb\user($this->language, '\phpbb\datetime'),
-			))
-			->getMock()
-		;
-
-		return $viglink_helper;
+		return new \phpbb\viglink\acp\viglink_helper(
+			$this->cache,
+			new \phpbb\config\config(array()),
+			new \phpbb\file_downloader(),
+			$this->language,
+			$this->log,
+			new \phpbb\user($this->language, '\phpbb\datetime')
+		);
 	}
 
 	/**
