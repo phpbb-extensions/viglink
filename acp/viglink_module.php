@@ -17,6 +17,12 @@ use phpbb\request\type_cast_helper;
  */
 class viglink_module
 {
+	/** @var string $page_title The page title */
+	public $page_title;
+
+	/** @var string $tpl_name The page template name */
+	public $tpl_name;
+
 	/** @var string $u_action Custom form action */
 	public $u_action;
 
