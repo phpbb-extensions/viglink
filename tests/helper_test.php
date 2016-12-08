@@ -30,7 +30,7 @@ class helper_test extends \phpbb_test_case
 
 		global $phpbb_root_path, $phpEx;
 
-		include_once $phpbb_root_path . 'includes/functions.' . $phpEx;
+		include_once($phpbb_root_path . 'includes/functions.' . $phpEx);
 
 		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
 			->disableOriginalConstructor()
