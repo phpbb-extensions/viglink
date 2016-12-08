@@ -11,7 +11,7 @@
 namespace phpbb\viglink\migrations;
 
 /**
- * Migration to update VigLink data
+ * Migration to remove VigLink data
  */
 class viglink_data_v2 extends \phpbb\db\migration\migration
 {
@@ -28,7 +28,6 @@ class viglink_data_v2 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			// Basic config options
 			array('config.remove', array('viglink_api_key')),
 			array('config.remove', array('allow_viglink_global')),
 		);

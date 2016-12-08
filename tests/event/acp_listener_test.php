@@ -15,25 +15,25 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\acp_listener */
 	protected $acp_listener;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
+	/** @var \phpbb\cache\service|\PHPUnit_Framework_MockObject_MockObject */
 	protected $cache;
 
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \phpbb\language\language */
+	/** @var \phpbb\language\language|\PHPUnit_Framework_MockObject_MockObject */
 	protected $language;
 
 	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
 	protected $log;
 
-	/** @var \phpbb\request\request */
+	/** @var \phpbb\request\request|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
-	/** @var \phpbb\template\template */
+	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
+	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $helper;
 
 	protected $path;
