@@ -50,7 +50,7 @@ class helper_test extends \phpbb_test_case
 	 * Get viglink_helper mock object
 	 *
 	 * @param \phpbb\config\config $config
-	 * @return \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \phpbb\viglink\acp\viglink_helper
 	 */
 	public function get_viglink_helper()
 	{
