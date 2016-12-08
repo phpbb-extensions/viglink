@@ -71,29 +71,32 @@ class listener_test extends \phpbb_test_case
 	public function display_viglink_data()
 	{
 		return array(
-			array( // Viglink allowed, phpBB key available
+			// Viglink allowed, phpBB key available
+			array(
 				true,
 				'phpbb_key_1234567890',
-				   array(
-					   'viglink_enabled' => true,
-					   'viglink_api_key' => 'phpbb_key_1234567890',
-				   )
+				array(
+					'viglink_enabled' => true,
+					'viglink_api_key' => 'phpbb_key_1234567890',
+				),
 			),
-			array( // Viglink disallowed, disable viglink
+			// Viglink disallowed, disable viglink
+			array(
 				false,
 				'phpbb_key_1234567890',
-				   array(
-					   'viglink_enabled' => false,
-					   'viglink_api_key' => '',
-				   )
+				array(
+					'viglink_enabled' => false,
+					'viglink_api_key' => '',
+				),
 			),
-			array( // phpBB key missing, disable viglink
+			// phpBB key missing, disable viglink
+			array(
 				true,
 				'',
-				   array(
-					   'viglink_enabled' => false,
-					   'viglink_api_key' => '',
-				   )
+				array(
+					'viglink_enabled' => false,
+					'viglink_api_key' => '',
+				),
 			),
 		);
 	}
