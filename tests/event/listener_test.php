@@ -71,29 +71,29 @@ class listener_test extends \phpbb_test_case
 	public function display_viglink_data()
 	{
 		return array(
-			array( // User has no key, use phpBB's key
-				true, // allow people to use phpBB's key
+			array( // Viglink allowed, phpBB key available
+				true,
 				'phpbb_key_1234567890',
-				array(
-					'viglink_enabled' => true,
-					'viglink_api_key' => 'phpbb_key_1234567890',
-				)
+				   array(
+					   'viglink_enabled' => true,
+					   'viglink_api_key' => 'phpbb_key_1234567890',
+				   )
 			),
-			array( // User has a key, all are disallowed, disable viglink
-				false, // disallow people using phpBB's key
+			array( // Viglink disallowed, disable viglink
+				false,
 				'phpbb_key_1234567890',
-				array(
-					'viglink_enabled' => false,
-					'viglink_api_key' => '',
-				)
+				   array(
+					   'viglink_enabled' => false,
+					   'viglink_api_key' => '',
+				   )
 			),
-			array( // User has a key, but is disallowed, phpBB key missing, disable viglink
-				true, // allow people to use phpBB's key
+			array( // phpBB key missing, disable viglink
+				true,
 				'',
-				array(
-					'viglink_enabled' => false,
-					'viglink_api_key' => '',
-				)
+				   array(
+					   'viglink_enabled' => false,
+					   'viglink_api_key' => '',
+				   )
 			),
 		);
 	}

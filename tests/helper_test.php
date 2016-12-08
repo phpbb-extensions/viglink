@@ -30,10 +30,11 @@ class helper_test extends \phpbb_test_case
 
 		global $phpbb_root_path, $phpEx;
 
-		include_once($phpbb_root_path . 'includes/functions.' . $phpEx);
+		include_once $phpbb_root_path . 'includes/functions.' . $phpEx;
 
 		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
 			->disableOriginalConstructor()
+			->setMethods(array('get'))
 			->getMock();
 
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
@@ -51,7 +52,7 @@ class helper_test extends \phpbb_test_case
 	 * @param \phpbb\config\config $config
 	 * @return \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	public function get_viglink_helper($config)
+	public function get_viglink_helper()
 	{
 		return new \phpbb\viglink\acp\viglink_helper(
 			$this->cache,
@@ -70,8 +71,6 @@ class helper_test extends \phpbb_test_case
 	{
 		$message = 'Test message';
 
-		$config = new \phpbb\config\config(array());
-
 		$this->log->expects($this->any())
 			->method('add')
 			->with(
@@ -83,7 +82,23 @@ class helper_test extends \phpbb_test_case
 				array($message)
 			);
 
-		$viglink_helper = $this->get_viglink_helper($config);
+		$viglink_helper = $this->get_viglink_helper();
 		$viglink_helper->log_viglink_error($message);
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 */
+	public function test_exceptions()
+	{
+		$viglink_helper = $this->get_viglink_helper();
+
+		$this->cache->expects($this->once())
+			->method('get')
+			->with($this->anything())
+			->will($this->returnValue(false));
+
+		// Throw an exception when cache is required, but there is no cache data
+		$viglink_helper->set_viglink_services(false, true);
 	}
 }

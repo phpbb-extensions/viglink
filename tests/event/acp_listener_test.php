@@ -58,9 +58,6 @@ class acp_listener_test extends \phpbb_test_case
 
 		$this->helper = $this
 			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
-			->setMethods(array(
-				'get_versions_matching_stability',
-			))
 			->setConstructorArgs(array(
 				$this->cache,
 				$this->config,
@@ -113,6 +110,31 @@ class acp_listener_test extends \phpbb_test_case
 			'core.acp_main_notice',
 			'core.acp_help_phpbb_submit_before',
 		), array_keys(\phpbb\viglink\event\acp_listener::getSubscribedEvents()));
+	}
+
+	public function test_set_viglink_services()
+	{
+		$this->helper->expects($this->once())
+			->method('set_viglink_services');
+		$this->helper->expects($this->never())
+			->method('log_viglink_error');
+
+		$this->set_listener();
+
+		$this->acp_listener->set_viglink_services();
+	}
+
+	public function test_set_viglink_services_errors()
+	{
+		$this->helper->expects($this->once())
+			->method('set_viglink_services')
+			->willThrowException(new \RuntimeException);
+		$this->helper->expects($this->once())
+			->method('log_viglink_error');
+
+		$this->set_listener();
+
+		$this->acp_listener->set_viglink_services();
 	}
 
 	public function data_update_viglink_settings()

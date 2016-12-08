@@ -12,20 +12,32 @@ namespace phpbb\viglink\tests;
 
 class cron_test extends \phpbb_test_case
 {
+	/** @var \phpbb\cache\service */
+	protected $cache;
+
 	/** @var \phpbb\config\config */
 	protected $config;
 
 	/** @var \phpbb\viglink\cron\viglink */
 	protected $cron_task;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
-	protected $viglink_helper;
+	/** @var \phpbb\db\driver\mysqli|\PHPUnit_Framework_MockObject_MockObject */
+	protected $db;
 
-	/** @var \phpbb\file_downloader */
+	/** @var \phpbb\file_downloader|\PHPUnit_Framework_MockObject_MockObject */
 	protected $file_downloader;
 
-	/** @var \phpbb\language\language */
+	/** @var \phpbb\language\language|\PHPUnit_Framework_MockObject_MockObject */
 	protected $language;
+
+	/** @var \phpbb\log\log||\PHPUnit_Framework_MockObject_MockObject */
+	protected $log;
+
+	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
+	protected $user;
+
+	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
+	protected $viglink_helper;
 
 	public function setUp()
 	{
@@ -82,6 +94,22 @@ class cron_test extends \phpbb_test_case
 
 		// Assert the viglink_last_gc value has been updated
 		$this->assertNotEquals($viglink_last_gc, $this->config['viglink_last_gc']);
+	}
+
+	/**
+	 * Test the cron task fails correctly
+	 */
+	public function test_run_fails()
+	{
+		$this->viglink_helper->expects($this->once())
+			->method('set_viglink_services')
+			->willThrowException(new \RuntimeException);
+
+		$this->viglink_helper->expects($this->once())
+			->method('log_viglink_error');
+
+		// Run the cron task
+		$this->cron_task->run();
 	}
 
 	/**
