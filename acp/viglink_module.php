@@ -17,6 +17,12 @@ use phpbb\request\type_cast_helper;
  */
 class viglink_module
 {
+	/** @var string $page_title The page title */
+	public $page_title;
+
+	/** @var string $tpl_name The page template name */
+	public $tpl_name;
+
 	/** @var string $u_action Custom form action */
 	public $u_action;
 
@@ -65,7 +71,7 @@ class viglink_module
 		}
 
 		// Do not process form if invalid
-		if (sizeof($error))
+		if (count($error))
 		{
 			$submit = false;
 		}
@@ -76,7 +82,7 @@ class viglink_module
 			$cfg_array['viglink_enabled'] = $request->variable('viglink_enabled', 0);
 
 			// If no errors, set the config values
-			if (!sizeof($error))
+			if (!count($error))
 			{
 				foreach ($cfg_array as $cfg => $value)
 				{
@@ -119,7 +125,7 @@ class viglink_module
 		}
 
 		$template->assign_vars(array(
-			'S_ERROR'				=> (bool) sizeof($error),
+			'S_ERROR'				=> (bool) count($error),
 			'ERROR_MSG'				=> implode('<br />', $error),
 
 			'VIGLINK_ENABLED'		=> $cfg_array['viglink_enabled'],

@@ -27,5 +27,6 @@ services:
             - '@cache'
             - '@config'
             - '@file_downloader'
+            - '@language'
             - '@log'
             - '@user'

@@ -43,22 +43,14 @@ class ext extends \phpbb\extension\base
 	{
 		if ($old_state === false)
 		{
-			/** @var \phpbb\cache\service $cache Cache service object */
-			$cache = $this->container->get('cache');
-
-			/** @var \phpbb\config\config $config Config object */
-			$config = $this->container->get('config');
-
-			/** @var \phpbb\file_downloader $file_downloader File downloader object*/
-			$file_downloader = $this->container->get('file_downloader');
-
-			/** @var \phpbb\log\log $log */
-			$log = $this->container->get('log');
-
-			/** @var \phpbb\user $user user object */
-			$user = $this->container->get('user');
-
-			$viglink_helper = new \phpbb\viglink\acp\viglink_helper($cache, $config, $file_downloader, $log, $user);
+			$viglink_helper = new \phpbb\viglink\acp\viglink_helper(
+				$this->container->get('cache'),
+				$this->container->get('config'),
+				$this->container->get('file_downloader'),
+				$this->container->get('language'),
+				$this->container->get('log'),
+				$this->container->get('user')
+			);
 
 			try
 			{

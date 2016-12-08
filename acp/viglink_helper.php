@@ -13,24 +13,38 @@ namespace phpbb\viglink\acp;
 /**
  * Class to handle allowing or disallowing VigLink services
  */
-class viglink_helper extends \phpbb\version_helper
+class viglink_helper
 {
+	/** @var \phpbb\language\language $language */
+	protected $language;
+
 	/** @var \phpbb\log\log $log */
 	protected $log;
+
+	/** @var \phpbb\user $user */
+	protected $user;
+
+	/** @var bool Use SSL or not */
+	protected $use_ssl = false;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\cache\service   $cache
-	 * @param \phpbb\config\config   $config
-	 * @param \phpbb\file_downloader $file_downloader
-	 * @param \phpbb\log\log         $log
-	 * @param \phpbb\user            $user
+	 * @param \phpbb\cache\service     $cache
+	 * @param \phpbb\config\config     $config
+	 * @param \phpbb\file_downloader   $file_downloader
+	 * @param \phpbb\language\language $language
+	 * @param \phpbb\log\log           $log
+	 * @param \phpbb\user              $user
 	 */
-	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\log\log $log, \phpbb\user $user)
+	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\language\language $language, \phpbb\log\log $log, \phpbb\user $user)
 	{
-		parent::__construct($cache, $config, $file_downloader, $user);
+		$this->cache = $cache;
+		$this->config = $config;
+		$this->file_downloader = $file_downloader;
+		$this->language = $language;
 		$this->log = $log;
+		$this->user = $user;
 	}
 
 	/**
@@ -51,7 +65,7 @@ class viglink_helper extends \phpbb\version_helper
 
 		if ($info === false && $force_cache)
 		{
-			throw new \RuntimeException($this->user->lang('VERSIONCHECK_FAIL'));
+			throw new \RuntimeException($this->language->lang('VERSIONCHECK_FAIL'));
 		}
 		else if ($info === false || $force_update)
 		{
@@ -62,7 +76,7 @@ class viglink_helper extends \phpbb\version_helper
 			catch (\phpbb\exception\runtime_exception $exception)
 			{
 				$prepare_parameters = array_merge(array($exception->getMessage()), $exception->get_parameters());
-				throw new \RuntimeException(call_user_func_array(array($this->user, 'lang'), $prepare_parameters));
+				throw new \RuntimeException(call_user_func_array(array($this->language, 'lang'), $prepare_parameters));
 			}
 
 			if ($info === '0')

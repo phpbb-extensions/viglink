@@ -34,9 +34,9 @@ class helper_test extends \phpbb_test_case
 
 		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
 			->disableOriginalConstructor()
+			->setMethods(array('get'))
 			->getMock();
 
-		$this->path = __DIR__ . '/fixtures/';
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
 			->getMock();
@@ -50,27 +50,18 @@ class helper_test extends \phpbb_test_case
 	 * Get viglink_helper mock object
 	 *
 	 * @param \phpbb\config\config $config
-	 * @return \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \phpbb\viglink\acp\viglink_helper
 	 */
-	public function get_viglink_helper($config)
+	public function get_viglink_helper()
 	{
-		/** @var $viglink_helper \PHPUnit_Framework_MockObject_MockObject|\phpbb\viglink\acp\viglink_helper */
-		$viglink_helper = $this
-			->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
-			->setMethods(array(
-				'get_versions_matching_stability',
-			))
-			->setConstructorArgs(array(
-				$this->cache,
-				$config,
-				new \phpbb\file_downloader(),
-				$this->log,
-				new \phpbb\user($this->language, '\phpbb\datetime'),
-			))
-			->getMock()
-		;
-
-		return $viglink_helper;
+		return new \phpbb\viglink\acp\viglink_helper(
+			$this->cache,
+			new \phpbb\config\config(array()),
+			new \phpbb\file_downloader(),
+			$this->language,
+			$this->log,
+			new \phpbb\user($this->language, '\phpbb\datetime')
+		);
 	}
 
 	/**
@@ -79,8 +70,6 @@ class helper_test extends \phpbb_test_case
 	public function test_log_viglink_error()
 	{
 		$message = 'Test message';
-
-		$config = new \phpbb\config\config(array());
 
 		$this->log->expects($this->any())
 			->method('add')
@@ -93,7 +82,23 @@ class helper_test extends \phpbb_test_case
 				array($message)
 			);
 
-		$viglink_helper = $this->get_viglink_helper($config);
+		$viglink_helper = $this->get_viglink_helper();
 		$viglink_helper->log_viglink_error($message);
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 */
+	public function test_exceptions()
+	{
+		$viglink_helper = $this->get_viglink_helper();
+
+		$this->cache->expects($this->once())
+			->method('get')
+			->with($this->anything())
+			->will($this->returnValue(false));
+
+		// Throw an exception when cache is required, but there is no cache data
+		$viglink_helper->set_viglink_services(false, true);
 	}
 }
