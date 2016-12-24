@@ -96,7 +96,7 @@ class acp_listener implements EventSubscriberInterface
 			$this->helper->log_viglink_error($e->getMessage());
 		}
 
-		if (empty($this->config->offsetGet('viglink_ask_admin')) && $this->user->data['user_type'] == USER_FOUNDER)
+		if (empty($this->config['viglink_ask_admin']) && $this->user->data['user_type'] == USER_FOUNDER)
 		{
 			redirect(append_sid($this->phpbb_root_path . 'adm/index.' . $this->php_ext, 'i=acp_help_phpbb&mode=help_phpbb'));
 		}
@@ -118,7 +118,7 @@ class acp_listener implements EventSubscriberInterface
 		if (!empty($event['submit']))
 		{
 			$this->config->set('viglink_enabled', $viglink_setting);
-			if (empty($this->config->offsetGet('viglink_ask_admin')))
+			if (empty($this->config['viglink_ask_admin']))
 			{
 				$this->config->set('viglink_ask_admin', time());
 			}
