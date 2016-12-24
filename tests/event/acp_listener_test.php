@@ -33,13 +33,20 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
+	/** @var \phpbb\user */
+	protected $user;
+
 	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $helper;
 
 	protected $path;
 
+	protected $phpbb_root_path;
+	protected $php_ext;
+
 	public function setUp()
 	{
+		global $phpbb_root_path, $phpEx, $phpbb_dispatcher;
 		parent::setUp();
 
 		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
@@ -76,6 +83,10 @@ class acp_listener_test extends \phpbb_test_case
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->user = new \phpbb\user($this->language, '\phpbb\datetime');
+		$this->phpbb_root_path = $phpbb_root_path;
+		$this->php_ext = $phpEx;
+		$phpbb_dispatcher = new \phpbb_mock_event_dispatcher();
 	}
 
 	/**
@@ -88,7 +99,10 @@ class acp_listener_test extends \phpbb_test_case
 			$this->language,
 			$this->request,
 			$this->template,
-			$this->helper
+			$this->user,
+			$this->helper,
+			$this->phpbb_root_path,
+			$this->phpb_ext
 		);
 	}
 
