@@ -28,7 +28,10 @@ class viglink_ask_admin extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('viglink_ask_admin', '')),
+			array('if', array(
+				(!$this->config->offsetExists('viglink_ask_admin')),
+				array('config.add', array('viglink_ask_admin', '')),
+			)),
 		);
 	}
 }
