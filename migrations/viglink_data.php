@@ -29,7 +29,7 @@ class viglink_data extends \phpbb\db\migration\migration
 	{
 		return array(
 			// Basic config options
-			array('config.add', array('viglink_enabled', 1)),
+			array('config.add', array('viglink_enabled', 0)),
 			array('config.add', array('viglink_api_key', '')),
 
 			// Special config options for phpBB use

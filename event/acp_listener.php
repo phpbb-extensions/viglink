@@ -29,8 +29,17 @@ class acp_listener implements EventSubscriberInterface
 	/** @var \phpbb\language\language $language Language object */
 	protected $language;
 
+	/** @var \phpbb\user $user User object */
+	protected $user;
+
 	/** @var \phpbb\viglink\acp\viglink_helper $helper VigLink helper object */
 	protected $helper;
+
+	/** @var string $phpbb_root_path phpBB root path */
+	protected $phpbb_root_path;
+
+	/** @var string $php_ext PHP file extension */
+	protected $php_ext;
 
 	/**
 	 * Constructor
@@ -39,15 +48,23 @@ class acp_listener implements EventSubscriberInterface
 	 * @param \phpbb\language\language $language
 	 * @param \phpbb\request\request_interface $request phpBB request
 	 * @param \phpbb\template\template $template
+	 * @param \phpbb\user $user User object
 	 * @param \phpbb\viglink\acp\viglink_helper $viglink_helper Viglink helper object
+	 * @param string $phpbb_root_path phpBB root path
+	 * @param string $php_ext PHP file extension
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\viglink\acp\viglink_helper $viglink_helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\request\request_interface $request,
+								\phpbb\template\template $template, \phpbb\user $user, \phpbb\viglink\acp\viglink_helper $viglink_helper,
+								$phpbb_root_path, $php_ext)
 	{
 		$this->config = $config;
 		$this->language = $language;
 		$this->request = $request;
 		$this->template = $template;
+		$this->user = $user;
 		$this->helper = $viglink_helper;
+		$this->phpbb_root_path = $phpbb_root_path;
+		$this->php_ext = $php_ext;
 	}
 
 	/**
@@ -78,6 +95,11 @@ class acp_listener implements EventSubscriberInterface
 		{
 			$this->helper->log_viglink_error($e->getMessage());
 		}
+
+		if (empty($this->config['viglink_ask_admin']) && $this->user->data['user_type'] == USER_FOUNDER)
+		{
+			redirect(append_sid($this->phpbb_root_path . 'adm/index.' . $this->php_ext, 'i=acp_help_phpbb&mode=help_phpbb'));
+		}
 	}
 
 	/**
@@ -96,10 +118,15 @@ class acp_listener implements EventSubscriberInterface
 		if (!empty($event['submit']))
 		{
 			$this->config->set('viglink_enabled', $viglink_setting);
+			if (empty($this->config['viglink_ask_admin']))
+			{
+				$this->config->set('viglink_ask_admin', time());
+			}
 		}
 
 		$this->template->assign_vars(array(
-			'S_ENABLE_VIGLINK'		=> !empty($this->config['viglink_enabled']) || !$this->config['help_send_statistics_time'],
+			'S_ENABLE_VIGLINK'				=> !empty($this->config['viglink_enabled']) || !$this->config['help_send_statistics_time'],
+			'ACP_VIGLINK_SETTINGS_CHANGE'	=> $this->language->lang('ACP_VIGLINK_SETTINGS_CHANGE', append_sid($this->phpbb_root_path . 'adm/index.' . $this->php_ext, 'i=-phpbb-viglink-acp-viglink_module&mode=settings')),
 		));
 	}
 }

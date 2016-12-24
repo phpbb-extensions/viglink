@@ -17,7 +17,10 @@ services:
             - '@language'
             - '@request'
             - '@template'
+            - '@user'
             - '@phpbb.viglink.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
         tags:
             - { name: event.listener }
 
