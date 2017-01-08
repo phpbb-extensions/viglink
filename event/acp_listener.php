@@ -126,6 +126,7 @@ class acp_listener implements EventSubscriberInterface
 
 		$this->template->assign_vars(array(
 			'S_ENABLE_VIGLINK'				=> !empty($this->config['viglink_enabled']) || !$this->config['help_send_statistics_time'],
+			'S_VIGLINK_ASK_ADMIN'			=> empty($this->config['viglink_ask_admin']) && $this->user->data['user_type'] == USER_FOUNDER,
 			'ACP_VIGLINK_SETTINGS_CHANGE'	=> $this->language->lang('ACP_VIGLINK_SETTINGS_CHANGE', append_sid($this->phpbb_root_path . 'adm/index.' . $this->php_ext, 'i=-phpbb-viglink-acp-viglink_module&mode=settings')),
 		));
 	}
