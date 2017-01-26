@@ -36,8 +36,8 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	* {@inheritDoc}
-	*/
+	 * {@inheritDoc}
+	 */
 	public static function getSubscribedEvents()
 	{
 		return array(
