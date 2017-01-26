@@ -15,7 +15,7 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\acp_listener */
 	protected $acp_listener;
 
-	/** @var \phpbb\cache\service|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
 	protected $cache;
 
 	/** @var \phpbb\config\config */
@@ -49,9 +49,7 @@ class acp_listener_test extends \phpbb_test_case
 		global $phpbb_root_path, $phpEx, $phpbb_dispatcher;
 		parent::setUp();
 
-		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->cache = $this->getMock('\phpbb\cache\driver\driver_interface');
 
 		$this->config = new \phpbb\config\config(array());
 

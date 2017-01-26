@@ -12,7 +12,7 @@ namespace phpbb\viglink\tests;
 
 class cron_test extends \phpbb_test_case
 {
-	/** @var \phpbb\cache\service */
+	/** @var \phpbb\cache\driver\dummy */
 	protected $cache;
 
 	/** @var \phpbb\config\config */
@@ -41,8 +41,6 @@ class cron_test extends \phpbb_test_case
 
 	public function setUp()
 	{
-		global $phpbb_root_path;
-
 		parent::setUp();
 
 		$this->config = new \phpbb\config\config(array('viglink_last_gc' => 0, 'viglink_enabled' => 1));
@@ -63,7 +61,7 @@ class cron_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->cache = new \phpbb\cache\service(new \phpbb\cache\driver\dummy(), $this->config, $this->db, $phpbb_root_path, '.php');
+		$this->cache = new \phpbb\cache\driver\dummy();
 		$this->viglink_helper = $this->getMock('\phpbb\viglink\acp\viglink_helper',
 			array('set_viglink_services', 'log_viglink_error'),
 			array($this->cache, $this->config, $this->file_downloader, $this->language, $this->log, $this->user));
