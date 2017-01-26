@@ -70,7 +70,7 @@ class acp_listener implements EventSubscriberInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	static public function getSubscribedEvents()
+	public static function getSubscribedEvents()
 	{
 		return array(
 			'core.acp_main_notice'				=> 'set_viglink_services',
