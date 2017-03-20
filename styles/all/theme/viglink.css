@@ -9,10 +9,10 @@
 
 .viglink-header {
 	background: url('images/VigLink_logo.png') no-repeat 0 0;
-	padding-left: 142px;
 	padding-bottom: 18px;
+	padding-left: 142px;
 }
 
-.send-stats-tile > h2.viglink-header-h2 {
+.send-stats-tile > .viglink-header-h2 {
 	margin-bottom: 10px;
 }
