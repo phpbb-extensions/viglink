@@ -15,6 +15,15 @@ namespace phpbb\viglink\acp;
  */
 class viglink_helper
 {
+	/** @var \phpbb\cache\driver\driver_interface $cache */
+	protected $cache;
+
+	/** @var \phpbb\config\config $config */
+	protected $config;
+
+	/** @var \phpbb\file_downloader $file_downloader */
+	protected $file_downloader;
+
 	/** @var \phpbb\language\language $language */
 	protected $language;
 
@@ -30,14 +39,14 @@ class viglink_helper
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\cache\service     $cache
-	 * @param \phpbb\config\config     $config
-	 * @param \phpbb\file_downloader   $file_downloader
-	 * @param \phpbb\language\language $language
-	 * @param \phpbb\log\log           $log
-	 * @param \phpbb\user              $user
+	 * @param \phpbb\cache\driver\driver_interface $cache
+	 * @param \phpbb\config\config                 $config
+	 * @param \phpbb\file_downloader               $file_downloader
+	 * @param \phpbb\language\language             $language
+	 * @param \phpbb\log\log                       $log
+	 * @param \phpbb\user                          $user
 	 */
-	public function __construct(\phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\language\language $language, \phpbb\log\log $log, \phpbb\user $user)
+	public function __construct(\phpbb\cache\driver\driver_interface $cache, \phpbb\config\config $config, \phpbb\file_downloader $file_downloader, \phpbb\language\language $language, \phpbb\log\log $log, \phpbb\user $user)
 	{
 		$this->cache = $cache;
 		$this->config = $config;

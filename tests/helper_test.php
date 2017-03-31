@@ -12,7 +12,7 @@ namespace phpbb\viglink\tests;
 
 class helper_test extends \phpbb_test_case
 {
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\cache\service */
+	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
 	protected $cache;
 
 	/** @var string Path to test fixtures */
@@ -32,10 +32,7 @@ class helper_test extends \phpbb_test_case
 
 		include_once($phpbb_root_path . 'includes/functions.' . $phpEx);
 
-		$this->cache = $this->getMockBuilder('\phpbb\cache\service')
-			->disableOriginalConstructor()
-			->setMethods(array('get'))
-			->getMock();
+		$this->cache = $this->getMock('\phpbb\cache\driver\driver_interface');
 
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
