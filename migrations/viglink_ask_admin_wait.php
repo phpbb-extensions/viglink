@@ -11,26 +11,26 @@
 namespace phpbb\viglink\migrations;
 
 /**
- * Migration to ask admin about viglink
+ * Migration to only ask admin once per day
  */
-class viglink_ask_admin extends \phpbb\db\migration\migration
+class viglink_ask_admin_wait extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
-		return array('\phpbb\viglink\migrations\viglink_data_v2');
+		return array('\phpbb\viglink\migrations\viglink_ask_admin');
 	}
 
 	public function effectively_installed()
 	{
-		return isset($this->config['viglink_ask_admin']);
+		return isset($this->config['viglink_ask_admin_last']);
 	}
 
 	public function update_data()
 	{
 		return array(
 			array('if', array(
-				(!$this->config->offsetExists('viglink_ask_admin')),
-				array('config.add', array('viglink_ask_admin', '')),
+				(!$this->config->offsetExists('viglink_ask_admin_last')),
+				array('config.add', array('viglink_ask_admin_last', '0')),
 			)),
 		);
 	}
