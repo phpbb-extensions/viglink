@@ -5,10 +5,10 @@ language: php
 
 matrix:
   include:
-    - php: 5.4
+    - php: 5.5
       env: DB=none;NOTESTS=1
     - php: 5.4
-      env: DB=mysqli # MyISAM
+      env: DB=mysqli #myisam
     - php: 5.4
       env: DB=mysql
     - php: 5.4
@@ -25,9 +25,12 @@ matrix:
       env: DB=mysqli
     - php: 7.1
       env: DB=mysqli
+    - php: nightly
+      env: DB=mysqli
     - php: hhvm
       env: DB=mysqli
   allow_failures:
+    - php: nightly
     - php: hhvm
   fast_finish: true
 
@@ -42,6 +45,8 @@ env:
 branches:
   only:
     - master
+    - develop
+    - /^develop-.*$/
     - /^\d+(\.\d+)?\.x$/
 
 install:
