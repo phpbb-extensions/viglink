@@ -1,8 +1,8 @@
 {% if VIGLINK_ENABLED %}
 <script type="text/javascript">
 	var vglnk = {
-		key: '{{ VIGLINK_API_KEY }}',
-		sub_id: '{{ VIGLINK_SUB_ID }}'
+		key: '{{ VIGLINK_API_KEY|e("js") }}',
+		sub_id: '{{ VIGLINK_SUB_ID|e("js") }}'
 	};
 
 	(function(d, t) {
