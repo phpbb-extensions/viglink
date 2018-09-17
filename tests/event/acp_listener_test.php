@@ -49,7 +49,9 @@ class acp_listener_test extends \phpbb_test_case
 		global $phpbb_root_path, $phpEx, $phpbb_dispatcher;
 		parent::setUp();
 
-		$this->cache = $this->getMock('\phpbb\cache\driver\driver_interface');
+		$this->cache = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->config = new \phpbb\config\config(array());
 

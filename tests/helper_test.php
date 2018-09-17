@@ -32,7 +32,9 @@ class helper_test extends \phpbb_test_case
 
 		include_once($phpbb_root_path . 'includes/functions.' . $phpEx);
 
-		$this->cache = $this->getMock('\phpbb\cache\driver\driver_interface');
+		$this->cache = $this->getMockBuilder('\phpbb\cache\driver\driver_interface')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->language = $this->getMockBuilder('\phpbb\language\language')
 			->disableOriginalConstructor()
