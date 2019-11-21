@@ -89,7 +89,7 @@ class cron_test extends \phpbb_test_case
 		// Test set_viglink_services() is called once
 		$this->viglink_helper->expects($this->once())
 			->method('set_viglink_services')
-			->will($this->returnCallback(array($this, 'set_config')));
+			->willReturnCallback(array($this, 'set_config'));
 
 		// Run the cron task
 		$this->cron_task->run();
@@ -179,9 +179,9 @@ class cron_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->setMethods(array('get'))
 			->getMock();
-		$this->file_downloader->expects($this->any())
+		$this->file_downloader->expects($this->once())
 			->method('get')
-			->will($this->returnValue('0'));
+			->willReturn('0');
 
 		$viglink_helper = $this->get_viglink_helper();
 		$viglink_helper->set_viglink_services(true);

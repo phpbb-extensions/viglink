@@ -48,7 +48,6 @@ class helper_test extends \phpbb_test_case
 	/**
 	 * Get viglink_helper mock object
 	 *
-	 * @param \phpbb\config\config $config
 	 * @return \phpbb\viglink\acp\viglink_helper
 	 */
 	public function get_viglink_helper()
@@ -70,7 +69,7 @@ class helper_test extends \phpbb_test_case
 	{
 		$message = 'Test message';
 
-		$this->log->expects($this->any())
+		$this->log->expects($this->once())
 			->method('add')
 			->with(
 				$this->equalTo('critical'),
@@ -95,7 +94,7 @@ class helper_test extends \phpbb_test_case
 		$this->cache->expects($this->once())
 			->method('get')
 			->with($this->anything())
-			->will($this->returnValue(false));
+			->willReturn(false);
 
 		// Throw an exception when cache is required, but there is no cache data
 		$viglink_helper->set_viglink_services(false, true);
