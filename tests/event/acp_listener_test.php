@@ -102,7 +102,7 @@ class acp_listener_test extends \phpbb_test_case
 			$this->user,
 			$this->helper,
 			$this->phpbb_root_path,
-			$this->phpb_ext
+			$this->php_ext
 		);
 	}
 
@@ -193,7 +193,7 @@ class acp_listener_test extends \phpbb_test_case
 	public function test_update_viglink_settings($predefined_config, $event_ary, $request_return, $expected_setting)
 	{
 		$this->config = new \phpbb\config\config($predefined_config);
-		$this->request->expects($this->any())
+		$this->request->expects($this->once())
 			->method('variable')
 			->willReturn($request_return);
 		$this->set_listener();

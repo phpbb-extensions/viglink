@@ -76,7 +76,8 @@ class viglink_helper
 		{
 			throw new \RuntimeException($this->language->lang('VERSIONCHECK_FAIL'));
 		}
-		else if ($info === false || $force_update)
+
+		if ($info === false || $force_update)
 		{
 			try
 			{
