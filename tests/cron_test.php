@@ -54,9 +54,6 @@ class cron_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->setMethods(array('get'))
 			->getMock();
-		$this->file_downloader->expects($this->any())
-			->method('get')
-			->will($this->returnValue('1'));
 		$this->log = $this->getMockBuilder('\phpbb\log\log')
 			->disableOriginalConstructor()
 			->getMock();
@@ -169,10 +166,14 @@ class cron_test extends \phpbb_test_case
 
 	public function test_disable_viglink()
 	{
+		$this->file_downloader->expects($this->once())
+			->method('get')
+			->willReturn('1');
+
 		$viglink_helper = $this->get_viglink_helper();
 		$this->assertEquals('', $this->config['allow_viglink_phpbb']);
 		$viglink_helper->set_viglink_services(true);
-		$this->assertEquals(1, $this->config['allow_viglink_phpbb']);
+		$this->assertEquals(true, $this->config['allow_viglink_phpbb']);
 
 		// Change method to return false
 		$this->file_downloader = $this->getMockBuilder('\phpbb\file_downloader')
@@ -185,15 +186,6 @@ class cron_test extends \phpbb_test_case
 
 		$viglink_helper = $this->get_viglink_helper();
 		$viglink_helper->set_viglink_services(true);
-		$this->assertEquals(0, $this->config['allow_viglink_phpbb']);
-
-		// Reset to previous setting
-		$this->file_downloader = $this->getMockBuilder('\phpbb\file_downloader')
-			->disableOriginalConstructor()
-			->setMethods(array('get'))
-			->getMock();
-		$this->file_downloader->expects($this->any())
-			->method('get')
-			->will($this->returnValue('1'));
+		$this->assertEquals(false, $this->config['allow_viglink_phpbb']);
 	}
 }
