@@ -24,7 +24,7 @@ class listener_test extends \phpbb_test_case
 	/**
 	 * Setup test environment
 	 */
-	public function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -55,7 +55,7 @@ class listener_test extends \phpbb_test_case
 	public function test_construct()
 	{
 		$this->set_listener();
-		$this->assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
+		self::assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
 	}
 
 	/**
@@ -63,7 +63,7 @@ class listener_test extends \phpbb_test_case
 	 */
 	public function test_getSubscribedEvents()
 	{
-		$this->assertEquals(array(
+		self::assertEquals(array(
 			'core.viewtopic_post_row_after',
 		), array_keys(\phpbb\viglink\event\listener::getSubscribedEvents()));
 	}
@@ -116,7 +116,7 @@ class listener_test extends \phpbb_test_case
 
 		$this->set_listener();
 
-		$this->template->expects($this->once())
+		$this->template->expects(self::once())
 			->method('assign_vars')
 			->with(array(
 				'VIGLINK_ENABLED'	=> $expected['viglink_enabled'],

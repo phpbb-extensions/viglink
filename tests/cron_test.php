@@ -39,7 +39,7 @@ class cron_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $viglink_helper;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -84,7 +84,7 @@ class cron_test extends \phpbb_test_case
 		$viglink_last_gc = $this->config['viglink_last_gc'];
 
 		// Test set_viglink_services() is called once
-		$this->viglink_helper->expects($this->once())
+		$this->viglink_helper->expects(self::once())
 			->method('set_viglink_services')
 			->willReturnCallback(array($this, 'set_config'));
 
@@ -92,7 +92,7 @@ class cron_test extends \phpbb_test_case
 		$this->cron_task->run();
 
 		// Assert the viglink_last_gc value has been updated
-		$this->assertNotEquals($viglink_last_gc, $this->config['viglink_last_gc']);
+		self::assertNotEquals($viglink_last_gc, $this->config['viglink_last_gc']);
 	}
 
 	/**
@@ -100,11 +100,11 @@ class cron_test extends \phpbb_test_case
 	 */
 	public function test_run_fails()
 	{
-		$this->viglink_helper->expects($this->once())
+		$this->viglink_helper->expects(self::once())
 			->method('set_viglink_services')
 			->willThrowException(new \RuntimeException);
 
-		$this->viglink_helper->expects($this->once())
+		$this->viglink_helper->expects(self::once())
 			->method('log_viglink_error');
 
 		// Run the cron task
@@ -139,7 +139,7 @@ class cron_test extends \phpbb_test_case
 		$this->config['viglink_last_gc'] = $time;
 
 		// Assert we get the expected result from should_run()
-		$this->assertSame($expected, $this->cron_task->should_run());
+		self::assertSame($expected, $this->cron_task->should_run());
 	}
 
 	/**
@@ -147,12 +147,12 @@ class cron_test extends \phpbb_test_case
 	 */
 	public function test_is_runnable()
 	{
-		$this->assertTrue($this->cron_task->is_runnable());
+		self::assertTrue($this->cron_task->is_runnable());
 	}
 
 	private function get_viglink_helper()
 	{
-		$viglink_helper = new \phpbb\viglink\acp\viglink_helper(
+		return new \phpbb\viglink\acp\viglink_helper(
 			$this->cache,
 			$this->config,
 			$this->file_downloader,
@@ -160,32 +160,30 @@ class cron_test extends \phpbb_test_case
 			$this->log,
 			$this->user
 		);
-
-		return $viglink_helper;
 	}
 
 	public function test_disable_viglink()
 	{
-		$this->file_downloader->expects($this->once())
+		$this->file_downloader->expects(self::once())
 			->method('get')
 			->willReturn('1');
 
 		$viglink_helper = $this->get_viglink_helper();
-		$this->assertEquals('', $this->config['allow_viglink_phpbb']);
+		self::assertEquals('', $this->config['allow_viglink_phpbb']);
 		$viglink_helper->set_viglink_services(true);
-		$this->assertEquals(true, $this->config['allow_viglink_phpbb']);
+		self::assertEquals(true, $this->config['allow_viglink_phpbb']);
 
 		// Change method to return false
 		$this->file_downloader = $this->getMockBuilder('\phpbb\file_downloader')
 			->disableOriginalConstructor()
 			->setMethods(array('get'))
 			->getMock();
-		$this->file_downloader->expects($this->once())
+		$this->file_downloader->expects(self::once())
 			->method('get')
 			->willReturn('0');
 
 		$viglink_helper = $this->get_viglink_helper();
 		$viglink_helper->set_viglink_services(true);
-		$this->assertEquals(false, $this->config['allow_viglink_phpbb']);
+		self::assertEquals(false, $this->config['allow_viglink_phpbb']);
 	}
 }
