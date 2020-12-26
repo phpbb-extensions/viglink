@@ -22,7 +22,7 @@ class viglink_test extends \phpbb_functional_test_case
 	*
 	* @return array vendor/name of extension(s) to test
 	*/
-	static protected function setup_extensions()
+	protected static function setup_extensions()
 	{
 		return array('phpbb/viglink');
 	}
@@ -69,10 +69,10 @@ class viglink_test extends \phpbb_functional_test_case
 
 		// Assert VigLink appears on viewtopic pages
 		$crawler = self::request('GET', 'viewtopic.php?f=2&t=1');
-		$this->assertContains($api_key, $crawler->text());
+		self::assertStringContainsString($api_key, $crawler->text());
 
 		// Assert VigLink does not appear on other pages
 		$crawler = self::request('GET', 'index.php');
-		$this->assertNotContains($api_key, $crawler->text());
+		self::assertStringNotContainsString($api_key, $crawler->text());
 	}
 }

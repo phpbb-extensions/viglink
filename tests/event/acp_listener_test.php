@@ -44,7 +44,7 @@ class acp_listener_test extends \phpbb_test_case
 	protected $phpbb_root_path;
 	protected $php_ext;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		global $phpbb_root_path, $phpEx, $phpbb_dispatcher;
 		parent::setUp();
@@ -84,6 +84,7 @@ class acp_listener_test extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->getMock();
 		$this->user = new \phpbb\user($this->language, '\phpbb\datetime');
+		$this->user->data['user_type'] = USER_NORMAL;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $phpEx;
 		$phpbb_dispatcher = new \phpbb_mock_event_dispatcher();
@@ -112,7 +113,7 @@ class acp_listener_test extends \phpbb_test_case
 	public function test_construct()
 	{
 		$this->set_listener();
-		$this->assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->acp_listener);
+		self::assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->acp_listener);
 	}
 
 	/**
@@ -120,7 +121,7 @@ class acp_listener_test extends \phpbb_test_case
 	*/
 	public function test_getSubscribedEvents()
 	{
-		$this->assertEquals(array(
+		self::assertEquals(array(
 			'core.acp_main_notice',
 			'core.acp_help_phpbb_submit_before',
 		), array_keys(\phpbb\viglink\event\acp_listener::getSubscribedEvents()));
@@ -128,9 +129,9 @@ class acp_listener_test extends \phpbb_test_case
 
 	public function test_set_viglink_services()
 	{
-		$this->helper->expects($this->once())
+		$this->helper->expects(self::once())
 			->method('set_viglink_services');
-		$this->helper->expects($this->never())
+		$this->helper->expects(self::never())
 			->method('log_viglink_error');
 
 		$this->set_listener();
@@ -140,10 +141,10 @@ class acp_listener_test extends \phpbb_test_case
 
 	public function test_set_viglink_services_errors()
 	{
-		$this->helper->expects($this->once())
+		$this->helper->expects(self::once())
 			->method('set_viglink_services')
 			->willThrowException(new \RuntimeException);
-		$this->helper->expects($this->once())
+		$this->helper->expects(self::once())
 			->method('log_viglink_error');
 
 		$this->set_listener();
@@ -193,13 +194,13 @@ class acp_listener_test extends \phpbb_test_case
 	public function test_update_viglink_settings($predefined_config, $event_ary, $request_return, $expected_setting)
 	{
 		$this->config = new \phpbb\config\config($predefined_config);
-		$this->request->expects($this->once())
+		$this->request->expects(self::once())
 			->method('variable')
 			->willReturn($request_return);
 		$this->set_listener();
 
 		$this->acp_listener->update_viglink_settings($event_ary);
 
-		$this->assertEquals($this->config['viglink_enabled'], $expected_setting);
+		self::assertEquals($this->config['viglink_enabled'], $expected_setting);
 	}
 }

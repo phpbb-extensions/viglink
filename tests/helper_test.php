@@ -24,7 +24,7 @@ class helper_test extends \phpbb_test_case
 	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
 	protected $log;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -65,13 +65,13 @@ class helper_test extends \phpbb_test_case
 	{
 		$message = 'Test message';
 
-		$this->log->expects($this->once())
+		$this->log->expects(self::once())
 			->method('add')
 			->with(
-				$this->equalTo('critical'),
+				self::equalTo('critical'),
 				ANONYMOUS,
 				'',
-				$this->equalTo('LOG_VIGLINK_CHECK_FAIL'),
+				self::equalTo('LOG_VIGLINK_CHECK_FAIL'),
 				false,
 				array($message)
 			);
@@ -80,16 +80,15 @@ class helper_test extends \phpbb_test_case
 		$viglink_helper->log_viglink_error($message);
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 */
 	public function test_exceptions()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$viglink_helper = $this->get_viglink_helper();
 
-		$this->cache->expects($this->once())
+		$this->cache->expects(self::once())
 			->method('get')
-			->with($this->anything())
+			->with(self::anything())
 			->willReturn(false);
 
 		// Throw an exception when cache is required, but there is no cache data
