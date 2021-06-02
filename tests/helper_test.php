@@ -12,7 +12,7 @@ namespace phpbb\viglink\tests;
 
 class helper_test extends \phpbb_test_case
 {
-	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit\Framework\MockObject\MockObject */
 	protected $cache;
 
 	/** @var string Path to test fixtures */
@@ -21,7 +21,7 @@ class helper_test extends \phpbb_test_case
 	/** @var \phpbb\language\language */
 	protected $language;
 
-	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\log\log|\PHPUnit\Framework\MockObject\MockObject */
 	protected $log;
 
 	protected function setUp(): void

@@ -21,22 +21,22 @@ class cron_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\cron\viglink */
 	protected $cron_task;
 
-	/** @var \phpbb\db\driver\mysqli|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\db\driver\mysqli|\PHPUnit\Framework\MockObject\MockObject */
 	protected $db;
 
-	/** @var \phpbb\file_downloader|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\file_downloader|\PHPUnit\Framework\MockObject\MockObject */
 	protected $file_downloader;
 
-	/** @var \phpbb\language\language|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\language\language|\PHPUnit\Framework\MockObject\MockObject */
 	protected $language;
 
-	/** @var \phpbb\log\log||\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\log\log||\PHPUnit\Framework\MockObject\MockObject */
 	protected $log;
 
-	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\user|\PHPUnit\Framework\MockObject\MockObject */
 	protected $user;
 
-	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit\Framework\MockObject\MockObject */
 	protected $viglink_helper;
 
 	protected function setUp(): void
