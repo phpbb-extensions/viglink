@@ -15,28 +15,28 @@ class acp_listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\acp_listener */
 	protected $acp_listener;
 
-	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\cache\driver\driver_interface|\PHPUnit\Framework\MockObject\MockObject */
 	protected $cache;
 
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \phpbb\language\language|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\language\language|\PHPUnit\Framework\MockObject\MockObject */
 	protected $language;
 
-	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\log\log|\PHPUnit\Framework\MockObject\MockObject */
 	protected $log;
 
-	/** @var \phpbb\request\request|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\request\request|\PHPUnit\Framework\MockObject\MockObject */
 	protected $request;
 
-	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\template\template|\PHPUnit\Framework\MockObject\MockObject */
 	protected $template;
 
 	/** @var \phpbb\user */
 	protected $user;
 
-	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\viglink\acp\viglink_helper|\PHPUnit\Framework\MockObject\MockObject */
 	protected $helper;
 
 	protected $path;

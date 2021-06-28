@@ -18,7 +18,7 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\phpbb\template\template */
+	/** @var \PHPUnit\Framework\MockObject\MockObject|\phpbb\template\template */
 	protected $template;
 
 	/**
@@ -124,8 +124,8 @@ class listener_test extends \phpbb_test_case
 				'VIGLINK_SUB_ID'	=> md5(md5('foobar.com') . $this->config['questionnaire_unique_id']),
 			));
 
-		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
+		$dispatcher = new \phpbb\event\dispatcher();
 		$dispatcher->addListener('core.viewtopic_post_row_after', array($this->listener, 'display_viglink'));
-		$dispatcher->dispatch('core.viewtopic_post_row_after');
+		$dispatcher->trigger_event('core.viewtopic_post_row_after');
 	}
 }
