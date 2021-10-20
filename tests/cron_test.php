@@ -52,7 +52,7 @@ class cron_test extends \phpbb_test_case
 			->getMock();
 		$this->file_downloader = $this->getMockBuilder('\phpbb\file_downloader')
 			->disableOriginalConstructor()
-			->setMethods(array('get'))
+			->onlyMethods(array('get'))
 			->getMock();
 		$this->log = $this->getMockBuilder('\phpbb\log\log')
 			->disableOriginalConstructor()
@@ -64,7 +64,7 @@ class cron_test extends \phpbb_test_case
 		$this->cache = new \phpbb\cache\driver\dummy();
 		$this->viglink_helper = $this->getMockBuilder('\phpbb\viglink\acp\viglink_helper')
 			->setConstructorArgs(array($this->cache, $this->config, $this->file_downloader, $this->language, $this->log, $this->user))
-			->setMethods(array('set_viglink_services', 'log_viglink_error'))
+			->onlyMethods(array('set_viglink_services', 'log_viglink_error'))
 			->getMock();
 
 		$this->cron_task = new \phpbb\viglink\cron\viglink($this->config, $this->viglink_helper);
@@ -176,7 +176,7 @@ class cron_test extends \phpbb_test_case
 		// Change method to return false
 		$this->file_downloader = $this->getMockBuilder('\phpbb\file_downloader')
 			->disableOriginalConstructor()
-			->setMethods(array('get'))
+			->onlyMethods(array('get'))
 			->getMock();
 		$this->file_downloader->expects(self::once())
 			->method('get')
