@@ -26,6 +26,11 @@ class viglink_module
 	/** @var string $u_action Custom form action */
 	public $u_action;
 
+	/**
+	 * Main ACP module
+	 *
+	 * @throws \Exception
+	 */
 	public function main($id, $mode)
 	{
 		global $phpbb_container;
