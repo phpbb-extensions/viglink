@@ -6,4 +6,4 @@ This is the repository for the development of the VigLink extension for phpBB 3.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpbb-extensions/viglink/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpbb-extensions/viglink/?branch=master)
 
 ## License
-[GNU General Public License v2](http://opensource.org/licenses/GPL-2.0)
+[GNU General Public License v2](https://opensource.org/licenses/GPL-2.0)
