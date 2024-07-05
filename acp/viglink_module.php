@@ -50,7 +50,7 @@ class viglink_module
 		$language->add_lang('viglink_module_acp', 'phpbb/viglink');
 
 		$this->tpl_name = 'acp_viglink';
-		$this->page_title = $language->lang('ACP_VIGLINK_SETTINGS');
+		$this->page_title = 'ACP_VIGLINK_SETTINGS';
 
 		$submit = $request->is_set_post('submit');
 
