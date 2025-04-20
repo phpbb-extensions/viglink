@@ -3,6 +3,7 @@
 This is the repository for the development of the VigLink extension for phpBB 3.2.x. The VigLink extension is currently bundled with phpBB 3.2.x releases.
 
 [![Build Status](https://github.com/phpbb-extensions/viglink/actions/workflows/tests.yml/badge.svg)](https://github.com/phpbb-extensions/viglink/actions)
+[![codecov](https://codecov.io/gh/phpbb-extensions/viglink/branch/dev%2F4.0/graph/badge.svg?token=UrSoWTAImr)](https://codecov.io/gh/phpbb-extensions/viglink)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpbb-extensions/viglink/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpbb-extensions/viglink/?branch=master)
 
 ## License
