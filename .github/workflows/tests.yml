@@ -16,6 +16,7 @@ on:
 
 jobs:
     call-tests:
+        name: Extension tests
         uses: phpbb-extensions/test-framework/.github/workflows/tests.yml@3.3.x
         with:
             EXTNAME: phpbb/viglink   # Your extension vendor/package name
