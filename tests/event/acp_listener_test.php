@@ -152,7 +152,7 @@ class acp_listener_test extends \phpbb_test_case
 		$this->acp_listener->set_viglink_services();
 	}
 
-	public function data_update_viglink_settings()
+	public static function data_update_viglink_settings()
 	{
 		return array(
 			array(

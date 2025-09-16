@@ -68,7 +68,7 @@ class listener_test extends \phpbb_test_case
 		), array_keys(\phpbb\viglink\event\listener::getSubscribedEvents()));
 	}
 
-	public function display_viglink_data()
+	public static function display_viglink_data()
 	{
 		return array(
 			// Viglink allowed, phpBB key available

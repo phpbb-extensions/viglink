@@ -91,6 +91,9 @@ class helper_test extends \phpbb_test_case
 			->with(self::anything())
 			->willReturn(false);
 
+		$this->language->method('lang')
+			->willReturnArgument(0);
+
 		// Throw an exception when cache is required, but there is no cache data
 		$viglink_helper->set_viglink_services(false, true);
 	}
