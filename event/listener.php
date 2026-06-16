@@ -25,6 +25,9 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template $template Template object */
 	protected $template;
 
+	/** @var string|null Cached VigLink API key */
+	protected $viglink_key;
+
 	/**
 	 * Constructor
 	 *
@@ -90,6 +93,11 @@ class listener implements EventSubscriberInterface
 
 	protected function get_viglink_key()
 	{
+		if ($this->viglink_key !== null)
+		{
+			return $this->viglink_key;
+		}
+
 		$viglink_key = '';
 
 		if ($this->config['allow_viglink_phpbb'] && $this->config['phpbb_viglink_api_key'])
@@ -98,6 +106,6 @@ class listener implements EventSubscriberInterface
 			$viglink_key = $this->config['phpbb_viglink_api_key'];
 		}
 
-		return $viglink_key;
+		return $this->viglink_key = $viglink_key;
 	}
 }
