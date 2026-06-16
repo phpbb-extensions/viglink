@@ -165,7 +165,7 @@ class listener_test extends \phpbb_test_case
 
 		if ($expected_calls)
 		{
-			self::assertSame('phpbb.googleanalytics', $consent_manager->registrations[0]['id']);
+			self::assertSame('phpbb.viglink', $consent_manager->registrations[0]['id']);
 			self::assertSame([
 				'label' => $this->language->lang('VIGLINK'),
 				'category' => 'marketing',
