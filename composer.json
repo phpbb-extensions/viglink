@@ -14,14 +14,19 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4",
-		"phpbb/phpbb": ">=3.2.0",
-		"composer/installers": "^1.0 || ^2.0"
+		"php": "^8.4",
+		"phpbb/phpbb": "4.0.*@dev",
+		"composer/installers": "^2.3"
 	},
 	"extra": {
 		"display-name": "VigLink",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.2.0"
+			"phpbb/phpbb": "4.0.*@dev"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
 		}
 	}
 }

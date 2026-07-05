@@ -20,13 +20,13 @@ class ext extends \phpbb\extension\base
 	 * The current phpBB version should meet or exceed
 	 * the minimum version required by this extension:
 	 *
-	 * Requires phpBB 3.2.0-b1 or greater
+	 * Requires phpBB 4.0.0-a3-dev or greater
 	 *
 	 * @return bool
 	 */
 	public function is_enableable()
 	{
-		return phpbb_version_compare(PHPBB_VERSION, '3.2.0-b1', '>=');
+		return phpbb_version_compare(PHPBB_VERSION, '4.0.0-a3-dev', '>=');
 	}
 
 	/**
