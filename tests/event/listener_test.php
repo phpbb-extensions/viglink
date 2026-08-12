@@ -15,6 +15,9 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\viglink\event\listener */
 	protected $listener;
 
@@ -28,6 +31,8 @@ class listener_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
+		global $phpbb_root_path, $phpEx;
+
 		// Load/Mock classes required by the event listener class
 		$this->config = new \phpbb\config\config(array(
 			'viglink_enabled' => 1,
@@ -36,6 +41,9 @@ class listener_test extends \phpbb_test_case
 		));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
+
+		$lang_loader = new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx);
+		$this->language = new \phpbb\language\language($lang_loader);
 	}
 
 	/**
@@ -45,6 +53,7 @@ class listener_test extends \phpbb_test_case
 	{
 		$this->listener = new \phpbb\viglink\event\listener(
 			$this->config,
+			$this->language,
 			$this->template
 		);
 	}
@@ -65,6 +74,7 @@ class listener_test extends \phpbb_test_case
 	{
 		self::assertEquals(array(
 			'core.viewtopic_post_row_after',
+			'phpbb.consentmanager.collect_registrations',
 		), array_keys(\phpbb\viglink\event\listener::getSubscribedEvents()));
 	}
 
@@ -127,5 +137,54 @@ class listener_test extends \phpbb_test_case
 		$dispatcher = new \phpbb\event\dispatcher();
 		$dispatcher->addListener('core.viewtopic_post_row_after', array($this->listener, 'display_viglink'));
 		$dispatcher->trigger_event('core.viewtopic_post_row_after');
+	}
+
+	public function register_marketing_data()
+	{
+		return [
+			'enabled' => [true, 1],
+			'disabled' => [false, 0],
+		];
+	}
+
+	/**
+	 * @dataProvider register_marketing_data
+	 */
+	public function test_register_analytics($enabled, $expected_calls)
+	{
+		$this->config['viglink_enabled'] = $this->config['allow_viglink_phpbb'] = $this->config['phpbb_viglink_api_key'] = $enabled;
+		$this->set_listener();
+
+		$consent_manager = new consent_manager_double();
+
+		$this->listener->register_viglink([
+			'consent_manager' => $consent_manager,
+		]);
+
+		self::assertCount($expected_calls, $consent_manager->registrations);
+
+		if ($expected_calls)
+		{
+			self::assertSame('phpbb.viglink', $consent_manager->registrations[0]['id']);
+			self::assertSame([
+				'label' => $this->language->lang('VIGLINK'),
+				'category' => 'marketing',
+				'description' => $this->language->lang('VIGLINK_DESCRIPTION'),
+			], $consent_manager->registrations[0]['definition']);
+		}
+	}
+}
+
+class consent_manager_double
+{
+	/** @var array */
+	public $registrations = [];
+
+	public function register($id, array $definition)
+	{
+		$this->registrations[] = [
+			'id' => $id,
+			'definition' => $definition,
+		];
 	}
 }
