@@ -38,6 +38,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'VIGLINK'				=> 'VigLink',
-	'VIGLINK_DESCRIPTION'	=> 'Uses third‑party cookies to personalise content and enable site monetisation.',
+	'VIGLINK'				=> 'VigLink (Sovrn)',
+	'VIGLINK_DESCRIPTION'	=> 'Uses third-party scripts and cookies to track outbound merchant visits for affiliate commission attribution.',
 ));
