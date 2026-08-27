@@ -101,7 +101,7 @@ class helper_test extends \phpbb_test_case
 	public function test_download_exception_is_localised()
 	{
 		$config = new \phpbb\config\config([]);
-		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->setMethods(['get'])->getMock();
+		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->onlyMethods(['get'])->getMock();
 		$downloader->method('get')->willThrowException(new \phpbb\exception\runtime_exception('DOWNLOAD_FAIL', ['detail']));
 		$this->cache->method('get')->willReturn(false);
 		$this->language->method('lang')->willReturnCallback(function () {

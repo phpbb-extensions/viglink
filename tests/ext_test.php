@@ -16,7 +16,7 @@ class ext_test extends \phpbb_test_case
 	{
 		$config = new \phpbb\config\config([]);
 		$cache = new \phpbb\cache\driver\dummy();
-		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->setMethods(['get'])->getMock();
+		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->onlyMethods(['get'])->getMock();
 		$downloader->method('get')->willReturn('1');
 		$language = $this->createMock('\phpbb\language\language');
 		$log = $this->createMock('\phpbb\log\log');
@@ -30,7 +30,7 @@ class ext_test extends \phpbb_test_case
 			['log', 1, $log],
 			['user', 1, $user],
 		]);
-		$finder = $this->getMockBuilder('\phpbb\finder')->disableOriginalConstructor()->getMock();
+		$finder = $this->getMockBuilder('\phpbb\finder\finder')->disableOriginalConstructor()->getMock();
 		$finder->method('extension_directory')->willReturnSelf();
 		$finder->method('find_from_extension')->willReturn([]);
 		$finder->method('get_classes_from_files')->willReturn([]);
@@ -49,7 +49,7 @@ class ext_test extends \phpbb_test_case
 		$cache = $this->createMock('\phpbb\cache\driver\driver_interface');
 		$cache->method('get')->willReturn(false);
 		$config = new \phpbb\config\config([]);
-		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->setMethods(['get'])->getMock();
+		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->onlyMethods(['get'])->getMock();
 		$downloader->method('get')->willThrowException(new \phpbb\exception\runtime_exception('FAIL'));
 		$language = $this->createMock('\phpbb\language\language');
 		$language->method('lang')->willReturn('FAIL');
@@ -61,7 +61,7 @@ class ext_test extends \phpbb_test_case
 			['cache.driver', 1, $cache], ['config', 1, $config], ['file_downloader', 1, $downloader],
 			['language', 1, $language], ['log', 1, $log], ['user', 1, $user],
 		]);
-		$finder = $this->getMockBuilder('\phpbb\finder')->disableOriginalConstructor()->getMock();
+		$finder = $this->getMockBuilder('\phpbb\finder\finder')->disableOriginalConstructor()->getMock();
 		$migrator = $this->getMockBuilder('\phpbb\db\migrator')->disableOriginalConstructor()->getMock();
 		$ext = new \phpbb\viglink\ext($container, $finder, $migrator, 'phpbb/viglink', '');
 
