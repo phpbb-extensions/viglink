@@ -173,6 +173,18 @@ class listener_test extends \phpbb_test_case
 			], $consent_manager->registrations[0]['definition']);
 		}
 	}
+
+	public function test_viglink_key_is_cached_between_displays()
+	{
+		$this->config['allow_viglink_phpbb'] = true;
+		$this->config['phpbb_viglink_api_key'] = 'key';
+		$this->set_listener();
+		$this->template->expects(self::exactly(2))->method('assign_vars');
+
+		$this->listener->display_viglink();
+		$this->config['phpbb_viglink_api_key'] = 'changed';
+		$this->listener->display_viglink();
+	}
 }
 
 class consent_manager_double
