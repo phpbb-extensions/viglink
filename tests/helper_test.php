@@ -97,4 +97,27 @@ class helper_test extends \phpbb_test_case
 		// Throw an exception when cache is required, but there is no cache data
 		$viglink_helper->set_viglink_services(false, true);
 	}
+
+	public function test_download_exception_is_localised()
+	{
+		$config = new \phpbb\config\config([]);
+		$downloader = $this->getMockBuilder('\phpbb\file_downloader')->setMethods(['get'])->getMock();
+		$downloader->method('get')->willThrowException(new \phpbb\exception\runtime_exception('DOWNLOAD_FAIL', ['detail']));
+		$this->cache->method('get')->willReturn(false);
+		$this->language->method('lang')->willReturnCallback(function () {
+			return implode(':', func_get_args());
+		});
+		$helper = new \phpbb\viglink\acp\viglink_helper(
+			$this->cache,
+			$config,
+			$downloader,
+			$this->language,
+			$this->log,
+			new \phpbb\user($this->language, '\phpbb\datetime')
+		);
+
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('DOWNLOAD_FAIL:detail');
+		$helper->set_viglink_services();
+	}
 }

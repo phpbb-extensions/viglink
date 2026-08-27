@@ -19,6 +19,6 @@ jobs:
         uses: phpbb-extensions/test-framework/.github/workflows/tests.yml@master
         with:
             EXTNAME: phpbb/viglink   # Your extension vendor/package name
-            CODECOV: 1
+            CODECOV: 1           # Run code coverage via codecov? 1 or 0
         secrets:
-            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} # Do not change this
