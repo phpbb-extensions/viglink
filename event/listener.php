@@ -45,7 +45,7 @@ class listener implements EventSubscriberInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function getSubscribedEvents()
+	public static function getSubscribedEvents(): array
 	{
 		return array(
 			'core.viewtopic_post_row_after'		=> 'display_viglink',
@@ -58,7 +58,7 @@ class listener implements EventSubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function display_viglink()
+	public function display_viglink(): void
 	{
 		$viglink_key = $this->get_viglink_key();
 

@@ -66,7 +66,7 @@ class viglink_helper
 	 *
 	 * @return void
 	 */
-	public function set_viglink_services($force_update = false, $force_cache = false)
+	public function set_viglink_services($force_update = false, $force_cache = false): void
 	{
 		$cache_key = '_versioncheck_viglink_' . $this->use_ssl;
 
@@ -114,7 +114,7 @@ class viglink_helper
 	 *
 	 * @return void
 	 */
-	protected function set_viglink_configs($data)
+	protected function set_viglink_configs($data): void
 	{
 		$viglink_configs = array(
 			'allow_viglink_phpbb',
@@ -137,7 +137,7 @@ class viglink_helper
 	 *
 	 * @param string $message The error message
 	 */
-	public function log_viglink_error($message)
+	public function log_viglink_error($message): void
 	{
 		$user_id = empty($this->user->data) ? ANONYMOUS : $this->user->data['user_id'];
 		$user_ip = empty($this->user->ip) ? '' : $this->user->ip;

@@ -31,7 +31,7 @@ class viglink_module
 	 *
 	 * @throws \Exception
 	 */
-	public function main($id, $mode)
+	public function main($id, $mode): void
 	{
 		global $phpbb_container;
 

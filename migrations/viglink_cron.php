@@ -15,17 +15,17 @@ namespace phpbb\viglink\migrations;
  */
 class viglink_cron extends \phpbb\db\migration\migration
 {
-	public static function depends_on()
+	public static function depends_on(): array
 	{
 		return array('\phpbb\viglink\migrations\viglink_data');
 	}
 
-	public function effectively_installed()
+	public function effectively_installed(): bool
 	{
 		return isset($this->config['viglink_last_gc']);
 	}
 
-	public function update_data()
+	public function update_data(): array
 	{
 		return array(
 			array('config.add', array('viglink_last_gc', 0, true)),
