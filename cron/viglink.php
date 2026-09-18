@@ -37,7 +37,7 @@ class viglink extends \phpbb\cron\task\base
 	/**
 	 * {@inheritDoc}
 	 */
-	public function run()
+	public function run(): void
 	{
 		try
 		{
@@ -52,7 +52,7 @@ class viglink extends \phpbb\cron\task\base
 	/**
 	 * {@inheritDoc}
 	 */
-	public function is_runnable()
+	public function is_runnable(): bool
 	{
 		return (bool) $this->config['viglink_enabled'];
 	}
@@ -60,7 +60,7 @@ class viglink extends \phpbb\cron\task\base
 	/**
 	 * {@inheritDoc}
 	 */
-	public function should_run()
+	public function should_run(): bool
 	{
 		return $this->config['viglink_last_gc'] < strtotime('24 hours ago');
 	}

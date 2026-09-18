@@ -70,7 +70,7 @@ class acp_listener implements EventSubscriberInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function getSubscribedEvents()
+	public static function getSubscribedEvents(): array
 	{
 		return array(
 			'core.acp_main_notice'				=> 'set_viglink_services',
@@ -85,7 +85,7 @@ class acp_listener implements EventSubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function set_viglink_services()
+	public function set_viglink_services(): void
 	{
 		try
 		{
@@ -111,7 +111,7 @@ class acp_listener implements EventSubscriberInterface
 	 *
 	 * @return void
 	 */
-	public function update_viglink_settings($event)
+	public function update_viglink_settings($event): void
 	{
 		$this->language->add_lang('viglink_module_acp', 'phpbb/viglink');
 

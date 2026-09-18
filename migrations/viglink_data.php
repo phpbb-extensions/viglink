@@ -15,17 +15,17 @@ namespace phpbb\viglink\migrations;
  */
 class viglink_data extends \phpbb\db\migration\migration
 {
-	public static function depends_on()
+	public static function depends_on(): array
 	{
 		return array('\phpbb\db\migration\data\v31x\v312');
 	}
 
-	public function effectively_installed()
+	public function effectively_installed(): bool
 	{
 		return isset($this->config['phpbb_viglink_api_key']);
 	}
 
-	public function update_data()
+	public function update_data(): array
 	{
 		return array(
 			// Basic config options
